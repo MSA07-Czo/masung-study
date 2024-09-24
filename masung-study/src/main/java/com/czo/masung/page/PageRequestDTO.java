@@ -5,13 +5,17 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PageRequestDTO {
 	@Min(value = 1)
 	@Positive

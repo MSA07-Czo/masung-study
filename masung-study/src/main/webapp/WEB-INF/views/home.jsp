@@ -6,12 +6,16 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
-<h1>인코딩 테스트</h1>
-
-<P>  The time on the server is ${serverTime}. </P>
-<a href="/board/list">게시물 목록</a>
+	<h1>마성의 공부방</h1>
+	
+	<c:if test="${logininfo == null}" >
+	    <a href="/login">로그인</a>
+	</c:if>
+	<c:if test="${logininfo != null}" >
+	    <a href="/mypage">마이페이지</a>
+        <a href="/logout"> 로그아웃</a>
+	</c:if>
 </body>
 </html>
+
+
