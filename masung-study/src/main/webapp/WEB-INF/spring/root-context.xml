@@ -20,7 +20,7 @@
 	 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/webdb" />
+		<property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/masung" />	<!-- 여기 db명  각자에 맞게 지정 후 사용해주세요 -->
 		<property name="username" value="user01"/>
 		<property name="password" value="1004"/>
 <!-- 		
