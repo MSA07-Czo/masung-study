@@ -10,7 +10,7 @@
 	http://mybatis.org/schema/mybatis-spring.xsd
 	">
 	
-	<context:component-scan base-package="org.kosa.hello" />
+	<context:component-scan base-package="com.czo.masung" />
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 
