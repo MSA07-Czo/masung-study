@@ -12,5 +12,6 @@
 <h1>인코딩 테스트</h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+<a href="/board/list">게시물 목록</a>
 </body>
 </html>
