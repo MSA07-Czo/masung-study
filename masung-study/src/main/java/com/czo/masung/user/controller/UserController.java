@@ -66,7 +66,7 @@ public class UserController {
 		
 		model.addAttribute("user", userService.getRead(uid));
 		
-		return "/member/read";
+		return "/user/mypage";
 	}
 	
 	@RequestMapping(value="remove", method = RequestMethod.GET)
@@ -82,7 +82,7 @@ public class UserController {
 		
 		model.addAttribute("member", userService.getRead(uid));
 		
-		return "/member/modify";
+		return "/user/modify";
 	}
 	
 	@RequestMapping(value="modify", method = RequestMethod.POST)

@@ -47,7 +47,7 @@
 	
 	<insert id="insert">
 		insert into Users (
-			user_id, user_pwd, name
+			user_id, user_pwd, user_name
 		) values (
 			#{user_id}, #{user_pwd}, #{user_name}
 		)

@@ -26,20 +26,20 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	public PageResponseDTO<UserDTO> getList(PageRequestDTO pageRequestDTO) {
-		List<UserDTO> list = userRepository.getList(pageRequestDTO).stream().map(member -> mapperUtil.map(member, UserDTO.class)).collect(Collectors.toList());
+		List<UserDTO> list = userRepository.getList(pageRequestDTO).stream().map(user -> mapperUtil.map(user, UserDTO.class)).collect(Collectors.toList());
 		
 		return new PageResponseDTO<UserDTO>(pageRequestDTO, list, userRepository.getTotalCount(pageRequestDTO));
 	}
 	
 	
 	public UserDTO getRead(String uid) {
-		UserVO member = userRepository.getRead(uid).orElse(null);
-		return member != null ? mapperUtil.map(member, UserDTO.class) : null; 
+		UserVO user = userRepository.getRead(uid).orElse(null);
+		return user != null ? mapperUtil.map(user, UserDTO.class) : null; 
 	}
 	
 	public UserDTO getRead_uuid(String uuid) {
-		UserVO member = userRepository.getRead_uuid(uuid).orElse(null);
-		return member != null ? mapperUtil.map(member, UserDTO.class) : null; 
+		UserVO user = userRepository.getRead_uuid(uuid).orElse(null);
+		return user != null ? mapperUtil.map(user, UserDTO.class) : null; 
 	}
 	
 	public int remove(String uid) {
