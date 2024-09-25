@@ -47,14 +47,14 @@ public class UserController {
 		return "/user/list";
 	}
 	
-	@RequestMapping(value="insert", method = RequestMethod.GET)
+	@RequestMapping(value="register", method = RequestMethod.GET)
 	public String insertGet() {
 		log.info("member/insert() ..... ");
 		
-		return "/user/insert";
+		return "/user/register";
 	}
 
-	@RequestMapping(value="insert", method = RequestMethod.POST)
+	@RequestMapping(value="register", method = RequestMethod.POST)
 	public String insert(UserDTO user) {
 		userService.insert(mapperUtil.map(user, UserVO.class));
 		
@@ -80,7 +80,7 @@ public class UserController {
 	@RequestMapping(value="modify", method = RequestMethod.GET)
 	public String modifyForm(String uid, Model model) {
 		
-		model.addAttribute("member", userService.getRead(uid));
+		model.addAttribute("user", userService.getRead(uid));
 		
 		return "/user/modify";
 	}

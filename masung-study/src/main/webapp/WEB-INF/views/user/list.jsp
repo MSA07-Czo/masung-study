@@ -44,7 +44,5 @@
 		</table>
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/page_nav.jsp"></jsp:include>
-		
-<a href="insert">등록</a>
 </body>
 </html>
