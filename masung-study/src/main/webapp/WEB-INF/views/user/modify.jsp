@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/inc/header.jsp" %>
 <h1>회원 수정 화면 </h1>
 <form action="modify" method="post">
 	<div>
