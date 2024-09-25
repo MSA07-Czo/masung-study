@@ -22,13 +22,15 @@
 			</h3>
 		</div>
 		<div>
-			<h3>
-				<input type="checkbox" name="auto_login" id="auto_login" value="1">
-				<label for="auto_login">자동 로그인</label>
-			</h3>
+			<input type="checkbox" name="auto_login" id="auto_login" value="1">
+			<label for="auto_login">자동 로그인</label>
 		</div>
+		
 		<input type="submit" value="로그인">
+		<input type="button" value="회원가입" onclick=location.href="/user/register">
 	</form>
+	<a href="">아이디 찾기</a>
+	<a href="">비밀번호 찾기</a>
 	
 <script>
 	var error = "${param.error}";

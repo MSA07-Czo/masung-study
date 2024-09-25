@@ -49,7 +49,6 @@ public class UserController {
 	
 	@RequestMapping(value="register", method = RequestMethod.GET)
 	public String insertGet() {
-		log.info("member/insert() ..... ");
 		
 		return "/user/register";
 	}
@@ -58,7 +57,7 @@ public class UserController {
 	public String insert(UserDTO user) {
 		userService.insert(mapperUtil.map(user, UserVO.class));
 		
-		return "redirect:list";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="read", method = RequestMethod.GET)

@@ -32,7 +32,7 @@
 		<div>
 			<h3>
 				<span>이름: </span>
-				<input type="text" name="name"  id="uname">
+				<input type="text" name="name"  id="name">
 			</h3>
 		</div>
 
