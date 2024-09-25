@@ -9,7 +9,8 @@
 	<h1>마성의 공부방</h1>
 	
 	<c:if test="${logininfo == null}" >
-	    <a href="/login">로그인</a>
+	    <a href="/user/login">로그인</a>
+	    <a href="/user/register">회원가입</a>
 	</c:if>
 	<c:if test="${logininfo != null}" >
 	    <a href="/mypage">마이페이지</a>
