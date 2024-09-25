@@ -25,7 +25,7 @@ public class HomeController {
 	public String home(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
 
 
-		model.addAttribute("pageResponseDTO", boardService.getList(pageRequestDTO));
+//		model.addAttribute("pageResponseDTO", boardService.getList(pageRequestDTO));
 
 		return "home";
 	}

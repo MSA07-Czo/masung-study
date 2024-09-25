@@ -1,27 +1,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page session="false" %>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
 	<title>Home</title>
 </head>
 <body>
 	<h1>마성의 공부방</h1>
-	
-	<c:if test="${logininfo == null}" >
+	${loginInfo.user_id}
+	<c:if test="${loginInfo == null}" >
 	    <a href="/user/login">로그인</a>
 	    <a href="/user/register">회원가입</a>
-	   <!-- 나중에 빼야 함  -->    <a href="/user/list">어드민</a>	<!-- 나중에 빼야 함  -->
 	</c:if>
-	<c:if test="${logininfo != null}" >
+	<c:if test="${loginInfo != null}" >
 	    <c:choose>
-	    	<c:when test="${loginifno.user_role == '조교'}">
+	    	<c:when test="${loginInfo.user_role == '조교'}">
 	    		<a href="/user/list">어드민</a>
 	    	</c:when>
 	    </c:choose>
 
-	    <a href="/user/mypage">마이페이지</a>
-        <a href="/logout"> 로그아웃</a>
+	    <a href="/user/read?uid=${loginInfo.user_id}">마이페이지</a>
+        <a href="/user/logout"> 로그아웃</a>
 	</c:if>
 	
 	<div class="card-body" >

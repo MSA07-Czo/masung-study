@@ -58,27 +58,27 @@ public class UserService {
 		return userRepository.insert(newMember);
 	}
 
-//	public UserDTO login(UserDTO inMember) {
-//		UserVO member = userRepository.getRead(inMember.getUid()).orElse(null);
-//		if (member != null && member.isEqualPwd(inMember.getPwd())) {
-//			if (inMember.isAuto_login()) {
-//				//1. uuid를 생성한다 
-//				String uuid = UUID.randomUUID().toString();
-//				
-//				//2. 회원 테이블에 uuid를 변경한다
-//				member.setUuid(uuid);
-//				memberDAO.modify_uuid(member);
-//				
-//				//3. 쿠키 값을 추가한다 -> contoller에서 처리한다 
-//			} else {
-//				//1. 회원 테이블에 uuid를 제거한다
-//				member.setUuid("");
-//				memberDAO.modify_uuid(member);
-//			}
-//			
-//			return mapperUtil.map(member, MemberDTO.class);
-//		}
-//		return null;
-//	}
-//	
+	public UserDTO login(UserDTO inUser) {
+		UserVO user = userRepository.getRead(inUser.getUser_id()).orElse(null);
+		if (user != null && user.isEqualPwd(inUser.getUser_pwd())) {
+			if (inUser.isAuto_login()) {
+				//1. uuid를 생성한다 
+				String uuid = UUID.randomUUID().toString();
+				
+				//2. 회원 테이블에 uuid를 변경한다
+				user.setUser_uuid(uuid);
+				userRepository.modify_uuid(user);
+				
+				//3. 쿠키 값을 추가한다 -> contoller에서 처리한다 
+			} else {
+				//1. 회원 테이블에 uuid를 제거한다
+				user.setUser_uuid("");
+				userRepository.modify_uuid(user);
+			}
+			
+			return mapperUtil.map(user, UserDTO.class);
+		}
+		return null;
+	}
+	
 }
