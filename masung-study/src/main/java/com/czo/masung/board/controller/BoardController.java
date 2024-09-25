@@ -1,16 +1,12 @@
 package com.czo.masung.board.controller;
 
 import javax.validation.Valid;
-//import org.kosa.hello.page.PageRequestDTO;
-//import org.kosa.hello.page.PageResponseDTO;
-//import org.kosa.hello.todo.dto.TodoDTO;
-//import org.kosa.hello.todo.service.TodoService;
-//import org.kosa.hello.todo.vo.TodoVO;
-//import org.kosa.hello.util.MapperUtil;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,17 +38,17 @@ public class BoardController {
 		PageResponseDTO<BoardDTO> pageResponseDTO = boardService.getList(pageRequestDTO);
 		log.info("pageResponseDTO 로그: " + pageResponseDTO.toString());
 		model.addAttribute("pageResponseDTO", pageResponseDTO);
-		model.addAttribute("pageRequestDTO", pageRequestDTO); 
+		model.addAttribute("pageRequestDTO", pageRequestDTO);
 
 		return "/board/list";
 	}
 
-//	@RequestMapping(value="/todo/insert", method = RequestMethod.GET)
-//	public String insertGet() {
-//		log.info("todo/insert() ..... ");
-//
-//		return "/todo/insert";
-//	}
+	@GetMapping("/todo/register")
+	public String registerGet() {
+		log.info("todo/register() 로그: ");
+
+		return "/todo/register";
+	}
 //
 //	@RequestMapping(value="/todo/insert", method = RequestMethod.POST)
 //	//	public String insert(String title, String dueDate) {

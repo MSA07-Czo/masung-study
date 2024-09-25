@@ -1,1 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czo.masung.board.repository.BoardRepository">
+	
+	<select id="getList" resultType="com.czo.masung.board.model.vo.BoardVO">
+		SELECT 
+			b.* 
+		FROM boards b INNER JOIN users u ON b.user_id = u.user_id
+		<include refid="search"/>
+		order by board_number desc
+		limit #{skip}, #{size}
+	</select>
 
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM boards b INNER JOIN users u ON b.user_id = u.user_id
+	</select>	
+
+	<select id="getRead" resultType="com.czo.masung.board.model.vo.BoardVO">
+		SELECT * FROM boards where board_number = #{board_number}
+	</select>	
+	
+	<delete id="remove" >
+		delete FROM boards where board_number = #{board_number}
+	</delete>
+	
+	<update id="modify" parameterType="com.czo.masung.board.model.vo.BoardVO">
+		update boards set 
+			  board_title    = #{board_title}
+			, board_content  = #{board_content}
+			, board_category_number = #{board_category_number}
+			, board_last_updated = NOW()
+		where board_number = #{board_number}
+	</update>
+	
+	<insert id="insert">
+		insert into boards (
+			 user_id
+			,board_title
+			,board_content
+			,board_viewcnt
+			,parent_board_number
+			,board_category_number
+		) values (
+			 #{user_id}
+			,#{board_title}
+			,#{board_content}
+			,#{board_viewcnt}
+			,#{parent_board_number}
+			,#{board_category_number}
+		)
+	</insert>
+
+</mapper>	
