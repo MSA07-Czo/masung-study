@@ -21,6 +21,10 @@
 				<input type="password" name="user_pwd"  >
 			</h3>
 		</div>
+		<div >
+	        <input type="radio" name="userGender" id="student"  value="student"> <label for="student">학생</label>
+	        <input type="radio" name="userGender" id="teacher" value="teacher"> <label for="teacher">교수</label>
+		</div>
 		<div>
 			<input type="checkbox" name="auto_login" id="auto_login" value="1">
 			<label for="auto_login">자동 로그인</label>

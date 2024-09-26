@@ -13,7 +13,7 @@
 	</c:if>
 	<c:if test="${loginInfo != null}" >
 	    <c:choose>
-	    	<c:when test="${loginInfo.user_role == '조교'}">
+	    	<c:when test="${loginInfo.user_role == 'teacher'}">
 	    		<a href="/user/list">어드민</a>
 	    	</c:when>
 	    </c:choose>
