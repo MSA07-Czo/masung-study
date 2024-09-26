@@ -34,7 +34,7 @@
 		where board_number = #{board_number}
 	</update>
 	
-	<insert id="insert" useGeneratedKeys="true" keyProperty="board_number">
+	<insert id="register" useGeneratedKeys="true" keyProperty="board_number">
 		insert into boards (
 			 user_id
 			,board_title

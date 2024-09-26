@@ -27,7 +27,7 @@ public class PageRequestDTO {
 	@Builder.Default
 	private int size = 10; 
 
-	private String [] types;
+	//검색 옵션
 	private String keyword;
 	private String from;
 	private String to;
@@ -45,15 +45,8 @@ public class PageRequestDTO {
 		builder.append("page=" + page);
 		builder.append("&size=" + size);
 
-		if (types != null && types.length > 0) {
-			for (String type : types) {
-				builder.append("&types=" + type);
-			}
-		}
-
 		if (keyword != null && keyword.length() > 0) {
 			try {
-				//keyword = "value=10&key=20"
 				builder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -61,16 +54,14 @@ public class PageRequestDTO {
 		}
 
 		if (from != null) {
-			builder.append("&from=" + from.toString());
+			builder.append("&from=" + from);
 		}
 
 		if (to != null) {
-			builder.append("&to=" + to.toString());
+			builder.append("&to=" + to);
 		}
 
 		log.info("getParam-> " + builder.toString());
 		return builder.toString();
 	}
-
-
 }

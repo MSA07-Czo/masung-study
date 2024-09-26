@@ -55,9 +55,8 @@
 		<h5 class="card-title">${pageResponseDTO.total}개의글</h5>
 
 		<div class="mb-3">
-			<form action="/board/list" method="get" name="searchForm"
-				id="searchForm">
-				<select name="size" id="size">
+			<form action="/board/list" method="get">
+				<select name="size" id="size" onchange="this.form.submit()">
 					<c:forTokens var="size" items="10,15,20,30,50" delims=",">
 						<option value="${size}"
 							${pageRequestDTO.size == size ? 'selected' : '' }>${size}</option>
@@ -93,6 +92,5 @@
 	<jsp:include page="/WEB-INF/views/inc/page_nav.jsp"></jsp:include>
 
 	<a href="register">등록</a>
-
 </body>
 </html>
