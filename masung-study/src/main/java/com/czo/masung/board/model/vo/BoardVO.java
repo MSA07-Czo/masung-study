@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class BoardVO {
 	private int       board_number;
 	private String    user_id;
+	private String    user_name;
 	private String    board_title;
 	private String    board_content;
 	private int       board_viewcnt;

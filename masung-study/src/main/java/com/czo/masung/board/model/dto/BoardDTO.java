@@ -17,6 +17,7 @@ public class BoardDTO {
 
 	@NotBlank
 	private String user_id;
+	private String user_name;
 
 	@NotBlank
 	@Size(min = 2)

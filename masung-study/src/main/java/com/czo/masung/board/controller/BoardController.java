@@ -30,13 +30,12 @@ public class BoardController {
 
 	@RequestMapping("/board/list")
 	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
-		log.info("board/list() 로그: " + pageRequestDTO.toString());
 		if (pageRequestDTO.getPage() == 0 && bindingResult.hasErrors()) {
 			log.error("Validation errors: " + bindingResult.getAllErrors());
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
 		PageResponseDTO<BoardDTO> pageResponseDTO = boardService.getList(pageRequestDTO);
-		log.info("pageResponseDTO 로그: " + pageResponseDTO.toString());
+		
 		model.addAttribute("pageResponseDTO", pageResponseDTO);
 		model.addAttribute("pageRequestDTO", pageRequestDTO);
 
@@ -45,8 +44,6 @@ public class BoardController {
 
 	@GetMapping("/board/register")
 	public String registerGet() {
-		log.info("board/register() 로그: ");
-
 		return "/board/register";
 	}
 
@@ -54,7 +51,6 @@ public class BoardController {
 	public String register(@Valid BoardDTO board, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
 		//입력값 유효성 검증 
-		board.setUser_id("user_1");
 		if (bindingResult.hasErrors()) {
 			for (ObjectError err : bindingResult.getAllErrors()) {
 				log.error("유효성 검증 오류 : " + String.join(", ", err.getCodes()) + " = " + err.getDefaultMessage());
@@ -71,9 +67,8 @@ public class BoardController {
 
 	@GetMapping("/board/read")
 	public String read(int board_number, PageRequestDTO pageRequestDTO, Model model) {
-
+		
 		model.addAttribute("board", boardService.getRead(board_number));
-
 		return "/board/read";
 	}
 

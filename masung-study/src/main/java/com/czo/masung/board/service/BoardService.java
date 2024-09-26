@@ -23,8 +23,8 @@ public class BoardService {
 	public PageResponseDTO<BoardDTO> getList(PageRequestDTO pageRequestDTO) {
 		List<BoardDTO> list = boardRepository.getList(pageRequestDTO)
 				.stream()
-				.map(board -> mapperUtil
-						.map(board, BoardDTO.class))
+				.map(boardVO -> mapperUtil
+						.map(boardVO, BoardDTO.class))
 				.collect(Collectors.toList());
 
 		return new PageResponseDTO<BoardDTO>(pageRequestDTO, list, boardRepository.getTotalCount(pageRequestDTO));
@@ -45,5 +45,25 @@ public class BoardService {
 
 	public int register(final BoardVO newBoard) {
 		return boardRepository.register(newBoard);
+	}
+
+	public PageResponseDTO<BoardDTO> getTopGoodList(PageRequestDTO pageRequestDTO) {
+		List<BoardDTO> list = boardRepository.getTopGoodList(pageRequestDTO)
+				.stream()
+				.map(boardVO -> mapperUtil
+						.map(boardVO, BoardDTO.class))
+				.collect(Collectors.toList());
+
+		return new PageResponseDTO<BoardDTO>(pageRequestDTO, list, boardRepository.getTotalCount(pageRequestDTO));
+	}
+
+	public PageResponseDTO<BoardDTO> getTopViewList(PageRequestDTO pageRequestDTO) {
+		List<BoardDTO> list = boardRepository.getTopViewList(pageRequestDTO)
+				.stream()
+				.map(boardVO -> mapperUtil
+						.map(boardVO, BoardDTO.class))
+				.collect(Collectors.toList());
+
+		return new PageResponseDTO<BoardDTO>(pageRequestDTO, list, boardRepository.getTotalCount(pageRequestDTO));
 	}
 }
