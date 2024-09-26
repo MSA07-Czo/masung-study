@@ -10,7 +10,7 @@
 </head>
 <body>
 	<c:if test="${not empty loginInfo}">
-		<a href="/user/logout">${loginInfo.name}</a>
+		<a href="/user/logout">${loginInfo.user_name}</a>
 	</c:if>
 
 
@@ -80,8 +80,8 @@
 					<tr>
 						<td>${board.board_number}</td>
 						<td><a
-							href="read?id=${board.board_number}&${pageRequestDTO.link}">${board.board_title}</a></td>
-						<td>${board.user_id}</td>
+							href="read?board_number=${board.board_number}&${pageRequestDTO.link}">${board.board_title}</a></td>
+						<td>${board.user_name}</td>
 						<td>${board.board_reg_date}</td>
 						<td>${board.board_viewcnt}</td>
 					</tr>

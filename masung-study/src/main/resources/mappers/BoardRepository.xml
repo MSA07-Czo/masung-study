@@ -6,10 +6,33 @@
 	
 	<select id="getList" resultType="com.czo.masung.board.model.vo.BoardVO">
 		SELECT 
-			b.* 
+			b.*,
+			u.user_name 
 		FROM boards b INNER JOIN users u ON b.user_id = u.user_id
 		<!-- <include refid="search"/>    검색 구현중  -->
 		order by board_number desc
+		limit #{skip}, #{size}
+	</select>
+	
+	<select id="getTopGoodList" resultType="com.czo.masung.board.model.vo.BoardVO">
+		SELECT 
+        	b.*,
+        	u.user_name,
+        	COUNT(l.good_or_bad) AS like_count
+    	FROM boards b
+    	INNER JOIN users u ON b.user_id = u.user_id 
+    	LEFT JOIN likes l ON b.board_number = l.board_number AND l.good_or_bad = 1  
+    	group by b.board_number, u.user_name 
+    	order by like_count desc, b.board_number desc
+    	LIMIT #{skip}, #{size}
+	</select>
+	
+	<select id="getTopViewList" resultType="com.czo.masung.board.model.vo.BoardVO">
+		SELECT 
+			b.*,
+			u.user_name 
+		FROM boards b INNER JOIN users u ON b.user_id = u.user_id
+		order by b.board_viewcnt desc, b.board_number desc
 		limit #{skip}, #{size}
 	</select>
 
