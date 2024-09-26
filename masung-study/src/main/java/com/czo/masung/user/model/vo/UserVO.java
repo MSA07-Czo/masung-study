@@ -22,4 +22,8 @@ public class UserVO {
 	private String user_recent_logout;
 	private String user_uuid;
 	
+	public boolean isEqualPwd(String pwd) {
+		return this.user_pwd.equals(pwd);
+	}
+	
 }
