@@ -8,7 +8,7 @@
 		SELECT 
 			b.* 
 		FROM boards b INNER JOIN users u ON b.user_id = u.user_id
-		<include refid="search"/>
+		<!-- <include refid="search"/>    검색 구현중  -->
 		order by board_number desc
 		limit #{skip}, #{size}
 	</select>
@@ -34,7 +34,7 @@
 		where board_number = #{board_number}
 	</update>
 	
-	<insert id="insert">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="board_number">
 		insert into boards (
 			 user_id
 			,board_title
