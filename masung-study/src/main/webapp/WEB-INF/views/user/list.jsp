@@ -20,8 +20,8 @@
 
 </head>
 <body>
+<%@ include file="/WEB-INF/views/inc/header.jsp" %>
 <h1>회원 목록</h1>
-
 	<div class="card-body" >
 		<h5 class="card-title">Special Title ...</h5>
 		<table class="table" style="100%">
@@ -44,7 +44,5 @@
 		</table>
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/page_nav.jsp"></jsp:include>
-		
-<a href="insert">등록</a>
 </body>
 </html>

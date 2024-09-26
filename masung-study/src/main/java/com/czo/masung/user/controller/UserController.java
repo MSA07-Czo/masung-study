@@ -47,18 +47,17 @@ public class UserController {
 		return "/user/list";
 	}
 	
-	@RequestMapping(value="insert", method = RequestMethod.GET)
+	@RequestMapping(value="register", method = RequestMethod.GET)
 	public String insertGet() {
-		log.info("member/insert() ..... ");
 		
-		return "/user/insert";
+		return "/user/register";
 	}
 
-	@RequestMapping(value="insert", method = RequestMethod.POST)
+	@RequestMapping(value="register", method = RequestMethod.POST)
 	public String insert(UserDTO user) {
 		userService.insert(mapperUtil.map(user, UserVO.class));
 		
-		return "redirect:list";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="read", method = RequestMethod.GET)
@@ -80,7 +79,7 @@ public class UserController {
 	@RequestMapping(value="modify", method = RequestMethod.GET)
 	public String modifyForm(String uid, Model model) {
 		
-		model.addAttribute("member", userService.getRead(uid));
+		model.addAttribute("user", userService.getRead(uid));
 		
 		return "/user/modify";
 	}
@@ -93,60 +92,63 @@ public class UserController {
 		return "redirect:read?uid=" + user.getUser_id();
 	}
 	
-//	@RequestMapping(value="login", method = RequestMethod.GET)
-//	public String loginForm() {
-//		HttpServletRequest request = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getRequest();
-//		HttpServletResponse response = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getResponse();
-//		
-//		System.out.println("로그인 화면");
-//		for (Cookie cookie : request.getCookies()) {
-//			if (cookie.getName().equals("remember_me")) {
-//				UserDTO member = userService.getRead_uuid(cookie.getValue());
-//				if (member != null) {
-//					HttpSession session = request.getSession();
-//					
-//					session.setAttribute("loginInfo", member);
-//					cookie.setMaxAge(60 * 10);
-//					response.addCookie(cookie);
-//					
-//					return "redirect:/todo/list";
-//				}
-//			}
-//		}
-//		return "/member/login";
-//	}
-//	
-//	@RequestMapping(value="login", method = RequestMethod.POST)
-//	public String login(UserDTO inMember, HttpServletRequest request, HttpServletResponse response) {
-//		
-//		HttpSession session = request.getSession();
-//		UserDTO member = userService.login(inMember);
-//		if (member != null) { 
-//			if (inMember.isAuto_login()) {
-//				//3. 쿠키 값을 추가한다
-//				Cookie cookie = new Cookie("remember_me", member.getUuid());
-//				cookie.setMaxAge(60 * 10);//10분만 사용됨
-//				cookie.setPath("/");
-//				
-//				response.addCookie(cookie);
-//			}
-//			session.setAttribute("loginInfo", member);
-//			return "redirect:/todo/list";
-//		} else {
-//			return "redirect:/member/login?error=error";
-//		}
-//	}
-//	
-//	@RequestMapping(value="logout", method = RequestMethod.GET)
-//	//public String logout(HttpServletRequest request, HttpServletResponse response) {
-//	public String logout(HttpSession session) {
-//		
-//		MemberDTO member = (MemberDTO) session.getAttribute("loginInfo");
-//		member.setUuid("");
-//		memberService.modify_uuid(mapperUtil.map(member, MemberVO.class));
-//
-//		//세션에 저장된 모든 정보를 무효하 한다 
-//		session.invalidate();
-//		return "redirect:/member/login";
-//	}
+	@RequestMapping(value="login", method = RequestMethod.GET)
+	public String loginForm() {
+		HttpServletRequest request = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getRequest();
+		HttpServletResponse response = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getResponse();
+		
+		System.out.println("로그인 화면");
+		for (Cookie cookie : request.getCookies()) {
+			if (cookie.getName().equals("remember_me")) {
+				UserDTO user = userService.getRead_uuid(cookie.getValue());
+				if (user != null) {
+					HttpSession session = request.getSession();
+					
+					session.setAttribute("loginInfo", user);
+					cookie.setMaxAge(60 * 10);
+					response.addCookie(cookie);
+					
+					return "redirect:/";
+				}
+			}
+		}
+		return "/user/login";
+	}
+	
+	@RequestMapping(value="login", method = RequestMethod.POST)
+	public String login(UserDTO inUser, HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		UserDTO user = userService.login(inUser);
+		if (user != null) { 
+			if (inUser.isAuto_login()) {
+				//3. 쿠키 값을 추가한다
+				Cookie cookie = new Cookie("remember_me", user.getUser_uuid());
+				cookie.setMaxAge(60 * 10);//10분만 사용됨
+				cookie.setPath("/");
+				
+				response.addCookie(cookie);
+			}
+			session.setAttribute("loginInfo", user);
+			System.out.println("로그인 성공");
+			System.out.println(user);
+			System.out.println("loginInfo :" + session.getAttribute("loginInfo"));
+			return "redirect:/";
+		} else {
+			return "redirect:/user/login?error=error";
+		}
+	}
+	
+	@RequestMapping(value="logout", method = RequestMethod.GET)
+	//public String logout(HttpServletRequest request, HttpServletResponse response) {
+	public String logout(HttpSession session) {
+		
+		UserDTO user = (UserDTO) session.getAttribute("loginInfo");
+		user.setUser_uuid("");
+		userService.modify_uuid(mapperUtil.map(user, UserVO.class));
+
+		//세션에 저장된 모든 정보를 무효하 한다 
+		session.invalidate();
+		return "redirect:/";
+	}
 }

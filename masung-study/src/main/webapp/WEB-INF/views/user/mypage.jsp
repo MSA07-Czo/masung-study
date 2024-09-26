@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/inc/header.jsp" %>
+
 <h1>회원 상세보기</h1>
 <div>
 	<h3>
