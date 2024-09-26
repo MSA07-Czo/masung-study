@@ -17,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -150,5 +152,37 @@ public class UserController {
 		//세션에 저장된 모든 정보를 무효하 한다 
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="findId", method = RequestMethod.GET)
+	public String findIdGet() {
+		
+		return "/user/findId";
+	}
+
+	@RequestMapping(value="findId", method = RequestMethod.POST)
+	public String findId(@RequestParam("user_name") String user_name,
+						@RequestParam("user_email") String user_email,
+						@RequestParam("user_phone") String user_phone, Model model) {
+
+		model.addAttribute("user_id", userService.findId(user_name, user_email, user_phone));		
+		return "/user/findId";
+	}
+	
+	@RequestMapping(value="findPwd", method = RequestMethod.GET)
+	public String findPwdGet() {
+		
+		return "/user/findPwd";
+	}
+
+	@RequestMapping(value="findPwd", method = RequestMethod.POST)
+	public String findPwd(@RequestParam("user_id") String user_id,
+						@RequestParam("user_name") String user_name,
+						@RequestParam("user_email") String user_email,
+						@RequestParam("user_phone") String user_phone,
+						@RequestParam("user_birth_date") String user_birth_date, Model model) {
+		
+		model.addAttribute("user_pwd", userService.findId(user_name, user_email, user_phone));
+		return "/user/findPwd";
 	}
 }

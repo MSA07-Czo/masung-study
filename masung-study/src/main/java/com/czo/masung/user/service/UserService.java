@@ -12,8 +12,10 @@ import com.czo.masung.page.PageResponseDTO;
 
 import com.czo.masung.util.MapperUtil;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
@@ -46,16 +48,16 @@ public class UserService {
 		return userRepository.remove(uid);
 	}
 	
-	public int modify(final UserVO newMember) {
-		return userRepository.modify(newMember);  
+	public int modify(final UserVO newUser) {
+		return userRepository.modify(newUser);  
 	}
 	
-	public int modify_uuid(final UserVO newMember) {
-		return userRepository.modify_uuid(newMember);  
+	public int modify_uuid(final UserVO newUser) {
+		return userRepository.modify_uuid(newUser);  
 	}
 	
-	public int insert(final UserVO newMember) {
-		return userRepository.insert(newMember);
+	public int insert(final UserVO newUser) {
+		return userRepository.insert(newUser);
 	}
 
 	public UserDTO login(UserDTO inUser) {
@@ -79,6 +81,16 @@ public class UserService {
 			return mapperUtil.map(user, UserDTO.class);
 		}
 		return null;
+	}
+	
+	public String findId(String user_name, String user_email, String user_phone) { 
+		String user_id = userRepository.findId(user_name, user_email, user_phone).orElse(null);
+		return user_id != null ? user_id : null;
+	}
+	
+	public String findPwd(String user_id, String user_name, String user_email, String user_phone, String user_birth_date) { 
+		String user_pwd = userRepository.findId(user_name, user_email, user_phone).orElse(null);
+		return user_pwd != null ? user_pwd : null;
 	}
 	
 }
