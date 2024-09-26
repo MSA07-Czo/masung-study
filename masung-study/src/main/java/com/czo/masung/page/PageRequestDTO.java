@@ -28,6 +28,7 @@ public class PageRequestDTO {
 	private int size = 10; 
 
 	//검색 옵션
+	private String[] types;
 	private String keyword;
 	private String from;
 	private String to;
