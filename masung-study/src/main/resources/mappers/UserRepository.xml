@@ -36,6 +36,10 @@
 		update Users set 
 			 user_pwd  = #{user_pwd}
 			,user_name = #{user_name} 
+			,user_email = #{user_email} 
+			,user_phone = #{user_phone} 
+			,user_birth_date = #{user_birth_date} 
+			,user_gender = #{user_gender} 
 		where user_id = #{user_id}
 	</update>
 	
@@ -47,9 +51,9 @@
 	
 	<insert id="insert">
 		insert into Users (
-			user_id, user_pwd, user_name
+			user_id, user_pwd, user_name, user_email, user_phone, user_birth_date, user_gender, user_role
 		) values (
-			#{user_id}, #{user_pwd}, #{user_name}
+			#{user_id}, #{user_pwd}, #{user_name}, #{user_email}, #{user_phone}, #{user_birth_date}, #{user_gender}, #{user_role}
 		)
 	</insert>
 
