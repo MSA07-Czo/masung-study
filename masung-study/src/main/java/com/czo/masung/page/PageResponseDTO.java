@@ -7,6 +7,7 @@ import lombok.Data;
 public class PageResponseDTO<E> {
 	private int page;
 	private int size = 10;
+	private int total;
 	
 	//페이지 시작 번호 
 	private int begin; 
@@ -19,11 +20,12 @@ public class PageResponseDTO<E> {
 	private List<E> list;
 	
 	public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> list, int total) {
-		this.page = pageRequestDTO.getPage();
-		this.size = pageRequestDTO.getSize();
-		this.list = list;
+		this.page  = pageRequestDTO.getPage();
+		this.size  = pageRequestDTO.getSize();
+		this.total = total;
+		this.list  = list;
 		
-		this.end = (int) Math.ceil(page/10.0) * 10;
+		this.end   = (int) Math.ceil(page/10.0) * 10;
 		this.begin = end - 9;
 		
 		//최종 페이지 값 보정 
