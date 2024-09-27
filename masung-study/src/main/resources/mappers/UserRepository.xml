@@ -57,5 +57,23 @@
 			#{user_id}, #{user_pwd}, #{user_name}, #{user_email}, #{user_phone}, #{user_birth_date}, #{user_gender}, #{user_role}
 		)
 	</insert>
+	
+	<select id="findId" resultType="java.lang.String">
+		SELECT user_id 
+		FROM Users
+		WHERE user_name = #{user_name}
+		AND user_email = #{user_email}
+		AND user_phone = #{user_phone}
+	</select>
+	
+	<select id="findPwd" resultType="java.lang.String">
+		SELECT user_pwd 
+		FROM Users
+		WHERE user_id = #{user_id}
+		AND user_name = #{user_name}
+		AND user_email = #{user_email}
+		AND user_phone = #{user_phone}
+		AND user_birth_date = #{user_birth_date}
+	</select>
 
 </mapper>	
