@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -99,13 +101,15 @@ public class UserController {
 		HttpServletRequest request = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getRequest();
 		HttpServletResponse response = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getResponse();
 		
-		System.out.println("로그인 화면");
 		for (Cookie cookie : request.getCookies()) {
 			if (cookie.getName().equals("remember_me")) {
 				UserDTO user = userService.getRead_uuid(cookie.getValue());
 				if (user != null) {
 					HttpSession session = request.getSession();
-					
+					user.setUser_recent_login(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+					UserVO userVO = mapperUtil.map(user, UserVO.class);
+					userService.modify_recentLogin(userVO);
+					userService.insert_loginHis(userVO);
 					session.setAttribute("loginInfo", user);
 					cookie.setMaxAge(60 * 10);
 					response.addCookie(cookie);
@@ -123,6 +127,10 @@ public class UserController {
 		HttpSession session = request.getSession();
 		UserDTO user = userService.login(inUser);
 		if (user != null) { 
+			user.setUser_recent_login(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+			UserVO userVO = mapperUtil.map(user, UserVO.class);
+			userService.modify_recentLogin(userVO);
+			userService.insert_loginHis(userVO);
 			if (inUser.isAuto_login()) {
 				//3. 쿠키 값을 추가한다
 				Cookie cookie = new Cookie("remember_me", user.getUser_uuid());
@@ -147,8 +155,11 @@ public class UserController {
 		
 		UserDTO user = (UserDTO) session.getAttribute("loginInfo");
 		user.setUser_uuid("");
-		userService.modify_uuid(mapperUtil.map(user, UserVO.class));
-
+		user.setUser_recent_logout(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		UserVO userVO = mapperUtil.map(user, UserVO.class);
+		userService.modify_uuid(userVO);
+		userService.modify_recentLogout(userVO);
+		userService.insert_logoutHis(userVO);
 		//세션에 저장된 모든 정보를 무효하 한다 
 		session.invalidate();
 		return "redirect:/";

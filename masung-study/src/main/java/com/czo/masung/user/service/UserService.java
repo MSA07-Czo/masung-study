@@ -56,8 +56,24 @@ public class UserService {
 		return userRepository.modify_uuid(newUser);  
 	}
 	
+	public int modify_recentLogin(final UserVO newUser) {
+		return userRepository.modify_recentLogin(newUser);  
+	}
+	
+	public int modify_recentLogout(final UserVO newUser) {
+		return userRepository.modify_recentLogout(newUser);  
+	}
+	
 	public int insert(final UserVO newUser) {
 		return userRepository.insert(newUser);
+	}
+	
+	public int insert_loginHis(final UserVO newUser) {
+		return userRepository.insert_loginHis(newUser);
+	}
+	
+	public int insert_logoutHis(final UserVO newUser) {
+		return userRepository.insert_logoutHis(newUser);
 	}
 
 	public UserDTO login(UserDTO inUser) {
@@ -92,5 +108,13 @@ public class UserService {
 		String user_pwd = userRepository.findId(user_name, user_email, user_phone).orElse(null);
 		return user_pwd != null ? user_pwd : null;
 	}
+	
+//	public int recentLogin(String user_id) {
+//		return userRepository.recentLogin(user_id);
+//	}
+	
+//	public int loginHis(String user_id, String his_login_date) {
+//		return userRepository.loginHis(user_id, his_login_date);
+//	}
 	
 }
