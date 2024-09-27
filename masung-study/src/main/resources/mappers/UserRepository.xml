@@ -50,11 +50,39 @@
 		where user_id = #{user_id}
 	</update>
 	
+	<update id="modify_recentLogin" parameterType="com.czo.masung.user.model.vo.UserVO">
+		update Users
+		set user_recent_login  = #{user_recent_login}
+		where user_id = #{user_id}
+	</update>
+	
+	<update id="modify_recentLogout" parameterType="com.czo.masung.user.model.vo.UserVO">
+		update Users
+		set user_recent_logout  = #{user_recent_logout}
+		where user_id = #{user_id}
+	</update>
+	
 	<insert id="insert">
 		insert into Users (
 			user_id, user_pwd, user_name, user_email, user_phone, user_birth_date, user_gender, user_role
 		) values (
 			#{user_id}, #{user_pwd}, #{user_name}, #{user_email}, #{user_phone}, #{user_birth_date}, #{user_gender}, #{user_role}
+		)
+	</insert>
+	
+	<insert id="insert_loginHis">
+		insert into User_LoginHistories (
+			user_id, his_login_date
+		) values (
+			#{user_id}, #{user_recent_login}
+		)
+	</insert>
+	
+	<insert id="insert_logoutHis">
+		insert into User_LoginHistories (
+			user_id, his_logout_date
+		) values (
+			#{user_id}, #{user_recent_logout}
 		)
 	</insert>
 	
