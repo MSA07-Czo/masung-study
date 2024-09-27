@@ -7,26 +7,26 @@
 	<select id="getList" resultType="com.czo.masung.board.model.vo.BoardVO">
 		SELECT 
 			b.* 
-		FROM boards b INNER JOIN users u ON b.user_id = u.user_id
+		FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
 		<!-- <include refid="search"/>    검색 구현중  -->
 		order by board_number desc
 		limit #{skip}, #{size}
 	</select>
 
 	<select id="getTotalCount" resultType="int">
-		SELECT count(*) FROM boards b INNER JOIN users u ON b.user_id = u.user_id
+		SELECT count(*) FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
 	</select>	
 
 	<select id="getRead" resultType="com.czo.masung.board.model.vo.BoardVO">
-		SELECT * FROM boards where board_number = #{board_number}
+		SELECT * FROM Boards where board_number = #{board_number}
 	</select>	
 	
 	<delete id="remove" >
-		delete FROM boards where board_number = #{board_number}
+		delete FROM Boards where board_number = #{board_number}
 	</delete>
 	
 	<update id="modify" parameterType="com.czo.masung.board.model.vo.BoardVO">
-		update boards set 
+		update Boards set 
 			  board_title    = #{board_title}
 			, board_content  = #{board_content}
 			, board_category_number = #{board_category_number}
@@ -35,7 +35,7 @@
 	</update>
 	
 	<insert id="register" useGeneratedKeys="true" keyProperty="board_number">
-		insert into boards (
+		insert into Boards (
 			 user_id
 			,board_title
 			,board_content
