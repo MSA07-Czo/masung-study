@@ -20,4 +20,5 @@ public interface BoardRepository {
 	int remove(int board_number);
 	int modify(BoardVO board);
 	int register(BoardVO board);
+	int saveViewCount(BoardVO board);
 }

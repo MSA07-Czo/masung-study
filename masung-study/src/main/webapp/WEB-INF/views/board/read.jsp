@@ -24,6 +24,11 @@
 		</h5>
 	</div>
 	<div>
+		<h3>
+			<span>카테고리: </span> <span>${board.board_category_name}</span>
+		</h3>
+	</div>
+	<div>
 		<span>내용: </span> <span>${board.board_content}</span>
 	</div>
 	<div>
@@ -47,6 +52,7 @@
 		</c:if>
 
 		<a href="list?${pageRequestDTO.link}" class="btn btn-secondary">목록</a>
+		<a href="answerRegister?parent_board_number=${board.board_number}">답변 게시글 작성</a>
 	</div>
 </body>
 </html>

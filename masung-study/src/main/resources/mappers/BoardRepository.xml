@@ -41,7 +41,18 @@
 	</select>	
 
 	<select id="getRead" resultType="com.czo.masung.board.model.vo.BoardVO">
-		SELECT * FROM boards where board_number = #{board_number}
+		SELECT
+	    b.*,
+	    u.user_name,
+	    bc.board_category_name
+	FROM 
+	    boards b
+	INNER JOIN 
+	    users u ON b.user_id = u.user_id
+	LEFT JOIN 
+	    board_category bc ON b.board_category_number = bc.board_category_number
+	WHERE 
+	    b.board_number = #{board_number}
 	</select>	
 	
 	<delete id="remove" >
@@ -62,17 +73,21 @@
 			 user_id
 			,board_title
 			,board_content
-			,board_viewcnt
 			,parent_board_number
 			,board_category_number
 		) values (
 			 #{user_id}
 			,#{board_title}
 			,#{board_content}
-			,#{board_viewcnt}
 			,#{parent_board_number}
 			,#{board_category_number}
 		)
 	</insert>
+	
+	<update id="saveViewCount" parameterType="com.czo.masung.board.model.vo.BoardVO">
+		update boards set 
+			 board_viewcnt    = #{board_viewcnt}
+		where board_number = #{board_number}
+	</update>
 
 </mapper>	
