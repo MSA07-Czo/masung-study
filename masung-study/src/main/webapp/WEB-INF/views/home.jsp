@@ -9,6 +9,7 @@
 	<%@ include file="/WEB-INF/views/inc/header.jsp"%>
 
 	<h1>마성의 공부방</h1>
+	<h3><a href="/board/list">전체글보기</a></h3>
 	<div class="card-body">
 		<h2 class="card-title">좋아요 TOP 10</h2>
 		<table class="table" style="">
@@ -26,7 +27,7 @@
 					<tr>
 						<td>${board.board_number}</td>
 						<td><a
-							href="read?board_number=${board.board_number}&${pageRequestDTO.link}">${board.board_title}</a></td>
+							href="board/read?board_number=${board.board_number}&${pageRequestDTO.link}">${board.board_title}</a></td>
 						<td>${board.user_name}</td>
 						<td>${board.board_reg_date}</td>
 						<td>${board.board_viewcnt}</td>
@@ -53,7 +54,7 @@
 					<tr>
 						<td>${board.board_number}</td>
 						<td><a
-							href="read?board_number=${board.board_number}&${pageRequestDTO.link}">${board.board_title}</a></td>
+							href="board/read?board_number=${board.board_number}&${pageRequestDTO.link}">${board.board_title}</a></td>
 						<td>${board.user_name}</td>
 						<td>${board.board_reg_date}</td>
 						<td>${board.board_viewcnt}</td>

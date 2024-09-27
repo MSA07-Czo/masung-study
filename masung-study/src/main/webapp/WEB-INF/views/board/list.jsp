@@ -80,7 +80,8 @@
 					<tr>
 						<td>${board.board_number}</td>
 						<td><a
-							href="read?board_number=${board.board_number}&${pageRequestDTO.link}">${board.board_title}</a></td>
+							href="read?board_number=${board.board_number}&${pageRequestDTO.link}">
+							<c:if test="${not empty board.parentId}">ㄴ</c:if>${board.board_title}</a></td>
 						<td>${board.user_name}</td>
 						<td>${board.board_reg_date}</td>
 						<td>${board.board_viewcnt}</td>

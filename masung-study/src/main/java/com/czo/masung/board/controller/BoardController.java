@@ -1,5 +1,6 @@
 package com.czo.masung.board.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	private final MapperUtil mapperUtil;
 	private final BoardService boardService;
+	private final HttpSession session;
 
 	@RequestMapping("/board/list")
 	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
@@ -35,7 +37,7 @@ public class BoardController {
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
 		PageResponseDTO<BoardDTO> pageResponseDTO = boardService.getList(pageRequestDTO);
-		
+
 		model.addAttribute("pageResponseDTO", pageResponseDTO);
 		model.addAttribute("pageRequestDTO", pageRequestDTO);
 
@@ -44,6 +46,12 @@ public class BoardController {
 
 	@GetMapping("/board/register")
 	public String registerGet() {
+		return "/board/register";
+	}
+	
+	@GetMapping("/board/answerRegister")
+	public String answerRegisterGet(int parent_board_number, Model model) {
+		model.addAttribute("parent_board_number", parent_board_number);
 		return "/board/register";
 	}
 
@@ -69,7 +77,7 @@ public class BoardController {
 	public String read(int board_number, PageRequestDTO pageRequestDTO, Model model) {
 		//조회수 증가
 		boardService.increaseViewcnt(board_number);
-		
+
 		model.addAttribute("board", boardService.getRead(board_number));
 		return "/board/read";
 	}
