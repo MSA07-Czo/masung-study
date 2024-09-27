@@ -81,6 +81,14 @@
         .result-message a:hover {
             text-decoration: underline;
         }
+        
+        /* Error message alert */
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -103,14 +111,25 @@
                 </div>
                 <input type="submit" value="아이디 찾기">
             </form>
+            <div class="error-message" id="error-message">
+            	해당하는 계정이 없습니다.
+        	</div>
         </c:if>
 
         <c:if test="${user_id != null}">
             <div class="result-message">
                 당신의 아이디는 <strong>${user_id}</strong>입니다.<br>
                 <a href="/user/login">로그인 하기</a>
+                <a href="/">홈으로</a>
             </div>
         </c:if>
     </div>
+    
+    <script>
+        var error = "${param.error}";
+        if (error !== "") {
+            document.getElementById('error-message').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
