@@ -67,6 +67,8 @@ public class BoardController {
 
 	@GetMapping("/board/read")
 	public String read(int board_number, PageRequestDTO pageRequestDTO, Model model) {
+		//조회수 증가
+		boardService.increaseViewcnt(board_number);
 		
 		model.addAttribute("board", boardService.getRead(board_number));
 		return "/board/read";

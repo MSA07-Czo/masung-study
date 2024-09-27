@@ -74,5 +74,11 @@
 			,#{board_category_number}
 		)
 	</insert>
+	
+	<update id="saveViewCount" parameterType="com.czo.masung.board.model.vo.BoardVO">
+		update boards set 
+			 board_viewcnt    = #{board_viewcnt}
+		where board_number = #{board_number}
+	</update>
 
 </mapper>	

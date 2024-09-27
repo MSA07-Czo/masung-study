@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.czo.masung.board.model.dto.BoardDTO;
 import com.czo.masung.board.model.vo.BoardVO;
@@ -13,8 +14,10 @@ import com.czo.masung.page.PageResponseDTO;
 import com.czo.masung.util.MapperUtil;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class BoardService {
 	private final MapperUtil mapperUtil;
@@ -32,6 +35,7 @@ public class BoardService {
 
 	public BoardDTO getRead(int board_number) {
 		BoardVO board = boardRepository.getRead(board_number).orElse(null);
+
 		return board != null ? mapperUtil.map(board, BoardDTO.class) : null;
 	}
 
@@ -65,5 +69,13 @@ public class BoardService {
 				.collect(Collectors.toList());
 
 		return new PageResponseDTO<BoardDTO>(pageRequestDTO, list, boardRepository.getTotalCount(pageRequestDTO));
+	}
+	@Transactional
+	public int increaseViewcnt(int board_number) {
+		BoardVO board = boardRepository.getRead(board_number).orElse(null);
+		board.setBoard_viewcnt(board.getBoard_viewcnt() +1);
+		boardRepository.saveViewCount(board);
+		
+		return board.getBoard_viewcnt();
 	}
 }
