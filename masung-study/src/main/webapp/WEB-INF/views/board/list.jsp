@@ -9,10 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:if test="${not empty loginInfo}">
-		<a href="/user/logout">${loginInfo.user_name}</a>
-	</c:if>
-
+	<jsp:include page="/WEB-INF/views/inc/header.jsp"></jsp:include>
 
 	<h1>전체 게시글보기</h1>
 	<!--  
@@ -81,7 +78,7 @@
 						<td>${board.board_number}</td>
 						<td><a
 							href="read?board_number=${board.board_number}&${pageRequestDTO.link}">
-							<c:if test="${not empty board.parentId}">ㄴ</c:if>${board.board_title}</a></td>
+							<c:if test="${board.parent_board_number != 0}">ㄴ</c:if>${board.board_title}</a></td>
 						<td>${board.user_name}</td>
 						<td>${board.board_reg_date}</td>
 						<td>${board.board_viewcnt}</td>

@@ -17,6 +17,7 @@ import com.czo.masung.board.model.vo.BoardVO;
 import com.czo.masung.board.service.BoardService;
 import com.czo.masung.page.PageRequestDTO;
 import com.czo.masung.page.PageResponseDTO;
+import com.czo.masung.user.model.dto.UserDTO;
 import com.czo.masung.util.MapperUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	private final MapperUtil mapperUtil;
 	private final BoardService boardService;
-	private final HttpSession session;
 
 	@RequestMapping("/board/list")
 	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
@@ -45,12 +45,22 @@ public class BoardController {
 	}
 
 	@GetMapping("/board/register")
-	public String registerGet() {
+	public String registerGet(HttpSession session, RedirectAttributes redirectAttributes) {
+		UserDTO user = (UserDTO) session.getAttribute("loginInfo");
+		if(user == null) {
+			redirectAttributes.addFlashAttribute("message", "로그인이 필요합니다.");
+			return "redirect:/user/login";
+		}	
 		return "/board/register";
 	}
-	
+
 	@GetMapping("/board/answerRegister")
-	public String answerRegisterGet(int parent_board_number, Model model) {
+	public String answerRegisterGet(int parent_board_number, Model model,HttpSession session, RedirectAttributes redirectAttributes) {
+		UserDTO user = (UserDTO) session.getAttribute("loginInfo");
+		if(user == null) {
+			redirectAttributes.addFlashAttribute("message", "로그인이 필요합니다.");
+			return "redirect:/user/login";
+		}
 		model.addAttribute("parent_board_number", parent_board_number);
 		return "/board/register";
 	}

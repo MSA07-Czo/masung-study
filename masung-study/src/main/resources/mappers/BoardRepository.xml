@@ -62,14 +62,12 @@
 			 user_id
 			,board_title
 			,board_content
-			,board_viewcnt
 			,parent_board_number
 			,board_category_number
 		) values (
 			 #{user_id}
 			,#{board_title}
 			,#{board_content}
-			,#{board_viewcnt}
 			,#{parent_board_number}
 			,#{board_category_number}
 		)
