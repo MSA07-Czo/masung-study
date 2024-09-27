@@ -24,6 +24,11 @@
 		</h5>
 	</div>
 	<div>
+		<h3>
+			<span>카테고리: </span> <span>${board.board_category_name}</span>
+		</h3>
+	</div>
+	<div>
 		<span>내용: </span> <span>${board.board_content}</span>
 	</div>
 	<div>
