@@ -105,7 +105,7 @@ public class UserService {
 	}
 	
 	public String findPwd(String user_id, String user_name, String user_email, String user_phone, String user_birth_date) { 
-		String user_pwd = userRepository.findId(user_name, user_email, user_phone).orElse(null);
+		String user_pwd = userRepository.findPwd(user_id, user_name, user_email, user_phone, user_birth_date).orElse(null);
 		return user_pwd != null ? user_pwd : null;
 	}
 	

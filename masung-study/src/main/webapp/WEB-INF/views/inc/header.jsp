@@ -88,7 +88,6 @@
         <nav class="user-info">
             <c:if test="${loginInfo == null}">
                 <a href="/user/login">로그인</a>
-                <a href="/user/register">회원가입</a>
             </c:if>
 
             <c:if test="${loginInfo != null}">
