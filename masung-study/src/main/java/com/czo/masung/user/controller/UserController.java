@@ -176,8 +176,13 @@ public class UserController {
 						@RequestParam("user_email") String user_email,
 						@RequestParam("user_phone") String user_phone, Model model) {
 
-		model.addAttribute("user_id", userService.findId(user_name, user_email, user_phone));		
-		return "/user/findId";
+		String userId = userService.findId(user_name, user_email, user_phone);
+		if (userId != null) {
+			model.addAttribute("user_id", userId);		
+			return "/user/findId";
+		} else {
+			return "redirect:/user/findId?error=error";
+		}
 	}
 	
 	@RequestMapping(value="findPwd", method = RequestMethod.GET)
@@ -193,7 +198,12 @@ public class UserController {
 						@RequestParam("user_phone") String user_phone,
 						@RequestParam("user_birth_date") String user_birth_date, Model model) {
 		
-		model.addAttribute("user_pwd", userService.findId(user_name, user_email, user_phone));
-		return "/user/findPwd";
+		String userPwd = userService.findPwd(user_id, user_name, user_email, user_phone, user_birth_date);
+		if (userPwd != null) {
+			model.addAttribute("user_pwd", userPwd);		
+			return "/user/findPwd";
+		} else {
+			return "redirect:/user/findPwd?error=error";
+		}
 	}
 }

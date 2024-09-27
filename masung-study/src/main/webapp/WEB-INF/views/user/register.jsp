@@ -2,129 +2,175 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            text-align: left;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="date"],
+        .form-group input[type="radio"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input[type="radio"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .form-group label.inline {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        input[type="button"]:hover,
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+        }
+
+        .gender-role-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
 
-	<h1>회원 가입</h1>
-	<form action="register" method="post">
-		<div>
-			<h3>
-				<span>아이디 : </span>
-				<input type="text" name="user_id" id="uid" >
-				<input type="button" id="idCheckButton" value="아이디중복">
-			</h3>
-		</div>
-		<div>
-			<h3>
-				<span>비번: </span>
-				<input type="password" name="user_pwd" id="pwd" >
-			</h3>
-		</div>
-		<div>
-			<h3>
-				<span>확인비번: </span>
-				<input type="password" name="user_pwd2" id="pwd2" >
-			</h3>
-		</div>
-		<div>
-			<h3>
-				<span>이름: </span>
-				<input type="text" name="user_name"  id="name">
-			</h3>
-		</div>
-		<div>
-			<h3>
-				<span>이메일: </span>
-				<input type="text" name="user_email"  id="email">
-			</h3>
-		</div>
-		<div>
-			<h3>
-				<span>전화번호: </span>
-				<input type="text" name="user_phone"  id="phone">
-			</h3>
-		</div>
-		<div>
-            <span>생년월일: </span>
-            <input type="date" name="user_birth_date"  id="birth_date">
-        </div>
-		<div >
-			<label class="label" >성별: </label>
-	        <input type="radio" name="user_gender" id="male"  value="M"> <label for="male">남성</label>
-	        <input type="radio" name="user_gender" id="female" value="F"> <label for="female">여성</label>
-		</div>
-		<div >
-			<label class="label" >???: </label>
-	        <input type="radio" name="user_role" id="student"  value="student"> <label for="student">학생</label>
-	        <input type="radio" name="user_role" id="teacher" value="teacher"> <label for="teacher">교수</label>
-		</div>
+    <div class="container">
+        <h1>회원 가입</h1>
+        <form action="register" method="post">
+            <div class="form-group">
+                <label for="uid">아이디</label>
+                <input type="text" name="user_id" id="uid">
+                <input type="button" id="idCheckButton" value="아이디 중복 확인">
+            </div>
 
-		<input type="submit" value="등록">
-	</form>
-	
-<script>
-	document.querySelector("#idCheckButton").addEventListener("click", async  e => {
-		//함수 호출  
-		//리턴 되기 까지 3분 소요됨
-		//
-		//alert("http://localhost:8090/idCheck?uid=" + uid.value);
-		const response = await fetch("http://localhost:8090/idCheck?uid=" + uid.value);
-		const jsonData = await response.json();
-		console.log(jsonData);
-		console.log(jsonData.status);
-		console.log(jsonData.result);
-		if (jsonData.status == 1) {
-			if (jsonData.result) {
-				alert("["+uid.value+"] 아이디는 사용 불가능 합니다")
-			} else {
-				alert("["+uid.value+"] 아이디는 사용 가능 합니다")
-			}
-		} else {
-			alert("서버 오류 발생")
-		}
-		
-	});
-	
-	document.querySelector("#iForm").addEventListener("submit", async  e => {
-		e.preventDefault();
-		
-		//함수 호출  
-		//리턴 되기 까지 3분 소요됨
-		//
-		const data = {
-			uid : uid.value,
-			pwd : pwd.value,
-			name : uname.value
-		};
-		
-		const response = await fetch("http://localhost:8090/member_api/insert", {
-	    	method: "POST", // *GET, POST, PUT, DELETE 등
-	    	headers: {
-	      		"Content-Type": "application/json",
-	    	},
-		    body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
-	  	});		
-		const jsonData = await response.json();
-		console.log(jsonData);
-		console.log(jsonData.status);
-		console.log(jsonData.result);
-		if (jsonData.status == 1) {
-			if (jsonData.result) {
-				alert("회원을 축하합니다");
-				location = "list";
-			} else {
-				alert("회원 가입을 실패하였습니다");
-			}
-		} else {
-			alert("서버 오류 발생")
-		}
-		
-	});		
-</script>
-	
+            <div class="form-group">
+                <label for="pwd">비밀번호</label>
+                <input type="password" name="user_pwd" id="pwd">
+            </div>
+
+            <div class="form-group">
+                <label for="pwd2">비밀번호 확인</label>
+                <input type="password" name="user_pwd2" id="pwd2">
+            </div>
+
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" name="user_name" id="name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="text" name="user_email" id="email">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">전화번호</label>
+                <input type="text" name="user_phone" id="phone">
+            </div>
+
+            <div class="form-group">
+                <label for="birth_date">생년월일</label>
+                <input type="date" name="user_birth_date" id="birth_date">
+            </div>
+
+            <div class="form-group gender-role-group">
+                <div>
+                    <label>성별</label><br>
+                    <label class="inline"><input type="radio" name="user_gender" value="M"> 남성</label>
+                    <label class="inline"><input type="radio" name="user_gender" value="F"> 여성</label>
+                </div>
+
+                <div>
+                    <label>역할</label><br>
+                    <label class="inline"><input type="radio" name="user_role" value="student"> 학생</label>
+                    <label class="inline"><input type="radio" name="user_role" value="teacher"> 교수</label>
+                </div>
+            </div>
+
+            <input type="submit" value="등록">
+        </form>
+    </div>
+
+    <script>
+        document.querySelector("#idCheckButton").addEventListener("click", async e => {
+            const uid = document.getElementById("uid").value;
+            const response = await fetch("http://localhost:8090/idCheck?uid=" + uid);
+            const jsonData = await response.json();
+            
+            if (jsonData.status === 1) {
+                alert(jsonData.result ? `아이디 [${uid}]는 사용 불가능합니다.` : `아이디 [${uid}]는 사용 가능합니다.`);
+            } else {
+                alert("서버 오류 발생");
+            }
+        });
+    </script>
+
 </body>
 </html>
