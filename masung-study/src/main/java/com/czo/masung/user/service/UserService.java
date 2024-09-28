@@ -108,13 +108,4 @@ public class UserService {
 		String user_pwd = userRepository.findPwd(user_id, user_name, user_email, user_phone, user_birth_date).orElse(null);
 		return user_pwd != null ? user_pwd : null;
 	}
-	
-//	public int recentLogin(String user_id) {
-//		return userRepository.recentLogin(user_id);
-//	}
-	
-//	public int loginHis(String user_id, String his_login_date) {
-//		return userRepository.loginHis(user_id, his_login_date);
-//	}
-	
 }

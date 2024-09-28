@@ -11,6 +11,7 @@ import com.czo.masung.user.service.UserService;
 import com.czo.masung.user.model.dto.UserDTO;
 import com.czo.masung.user.model.vo.UserVO;
 import com.czo.masung.page.PageRequestDTO;
+import com.czo.masung.page.PageResponseDTO;
 import com.czo.masung.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,10 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
-		model.addAttribute("pageResponseDTO", userService.getList(pageRequestDTO));
+		PageResponseDTO<UserDTO> pageResponseDTO = userService.getList(pageRequestDTO);
+		
+		model.addAttribute("pageResponseDTO", pageResponseDTO);
+		model.addAttribute("pageRequestDTO", pageRequestDTO);
 		
 		return "/user/list";
 	}
