@@ -19,9 +19,9 @@
         	b.*,
         	u.user_name,
         	COUNT(l.good_or_bad) AS like_count
-    	FROM boards b
-    	INNER JOIN users u ON b.user_id = u.user_id 
-    	LEFT JOIN likes l ON b.board_number = l.board_number AND l.good_or_bad = 1  
+    	FROM Boards b
+    	INNER JOIN Users u ON b.user_id = u.user_id 
+    	LEFT JOIN Likes l ON b.board_number = l.board_number AND l.good_or_bad = 1  
     	group by b.board_number, u.user_name 
     	order by like_count desc, b.board_number desc
     	LIMIT #{skip}, #{size}
@@ -31,7 +31,7 @@
 		SELECT 
 			b.*,
 			u.user_name 
-		FROM boards b INNER JOIN users u ON b.user_id = u.user_id
+		FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
 		order by b.board_viewcnt desc, b.board_number desc
 		limit #{skip}, #{size}
 	</select>
@@ -86,7 +86,7 @@
 	</insert>
 	
 	<update id="saveViewCount" parameterType="com.czo.masung.board.model.vo.BoardVO">
-		update boards set 
+		update Boards set 
 			 board_viewcnt    = #{board_viewcnt}
 		where board_number = #{board_number}
 	</update>
