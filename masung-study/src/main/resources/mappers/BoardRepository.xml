@@ -8,7 +8,7 @@
 		SELECT 
 			b.*,
 			u.user_name 
-		FROM boards b INNER JOIN users u ON b.user_id = u.user_id
+		FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
 		<!-- <include refid="search"/>    검색 구현중  -->
 		order by board_number desc
 		limit #{skip}, #{size}
@@ -37,18 +37,19 @@
 	</select>
 
 	<select id="getTotalCount" resultType="int">
-		SELECT count(*) FROM boards b INNER JOIN users u ON b.user_id = u.user_id
+		SELECT count(*) FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
 	</select>	
 
 	<select id="getRead" resultType="com.czo.masung.board.model.vo.BoardVO">
+
 		SELECT
 	    b.*,
 	    u.user_name,
 	    bc.board_category_name
 	FROM 
-	    boards b
+	    Boards b
 	INNER JOIN 
-	    users u ON b.user_id = u.user_id
+	    Users u ON b.user_id = u.user_id
 	LEFT JOIN 
 	    board_category bc ON b.board_category_number = bc.board_category_number
 	WHERE 
@@ -56,11 +57,11 @@
 	</select>	
 	
 	<delete id="remove" >
-		delete FROM boards where board_number = #{board_number}
+		delete FROM Boards where board_number = #{board_number}
 	</delete>
 	
 	<update id="modify" parameterType="com.czo.masung.board.model.vo.BoardVO">
-		update boards set 
+		update Boards set 
 			  board_title    = #{board_title}
 			, board_content  = #{board_content}
 			, board_category_number = #{board_category_number}
@@ -69,7 +70,7 @@
 	</update>
 	
 	<insert id="register" useGeneratedKeys="true" keyProperty="board_number">
-		insert into boards (
+		insert into Boards (
 			 user_id
 			,board_title
 			,board_content
