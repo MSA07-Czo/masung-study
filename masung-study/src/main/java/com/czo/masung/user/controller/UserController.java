@@ -111,7 +111,7 @@ public class UserController {
 					userService.modify_recentLogin(userVO);
 					userService.insert_loginHis(userVO);
 					session.setAttribute("loginInfo", user);
-					cookie.setMaxAge(60 * 10);
+					cookie.setMaxAge(60 * 60 * 24);
 					response.addCookie(cookie);
 					
 					return "redirect:/";

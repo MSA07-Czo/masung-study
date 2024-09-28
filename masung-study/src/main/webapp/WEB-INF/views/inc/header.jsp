@@ -6,6 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header Design</title>
+    <link 
+     href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" 
+     rel="stylesheet"
+    />
     <style>
         body {
             margin: 0;
@@ -41,6 +45,45 @@
         header nav a:hover {
             color: #ffcc00;
         }
+        
+        .dropdown {
+		  position: absolute;
+		  width: 250px;
+		  box-shadow: var(--shadow);
+		  border-radius: var(--radius);
+		  margin-top: 0.3rem;
+		  background: white;
+		  transition: all 0.1s cubic-bezier(0.16, 1, 0.5, 1);
+		
+		  transform: translateY(0.5rem);
+		  visibility: hidden;
+		  opacity: 0;
+		}
+		
+		.dropdown a {
+		  display: flex;
+		  align-items: center;
+		  column-gap: var(--gap);
+		  padding: 0.8rem 1rem;
+		  text-decoration: none;
+		  color: black;
+		}
+		
+		.dropdown a:hover {
+		  background-color: var(--color);
+		  color: red;
+		}
+		
+		.show {
+		  transform: translateX(-10rem) translateY(1rem);
+		  visibility: visible;
+		  opacity: 1;
+		}
+		
+/* 		.arrow {
+		  transform: rotate(180deg);
+		  transition: 0.2s ease;
+		} */
 
         .user-info {
             display: flex;
@@ -63,20 +106,16 @@
         }
 
         .btn {
-            padding: 0.5rem 1rem;
-            background-color: #ffcc00;
+            padding: 0rem 1rem;
+            background-color: rgba(0,0,0,0);
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            color: #007bff;
+            font-size: 25px;
+            color: #ffffff;
             transition: background-color 0.3s ease;
         }
-
-        .btn:hover {
-            background-color: #ffaa00;
-        }
-
     </style>
 </head>
 <body>
@@ -92,18 +131,53 @@
 
             <c:if test="${loginInfo != null}">
                 <div class="login-info">
-                    <span>${loginInfo.user_id} 님</span>
-                    <a href="/user/read?uid=${loginInfo.user_id}">마이페이지</a>
+
                     <c:choose>
                         <c:when test="${loginInfo.user_role == 'teacher'}">
-                            <a href="/user/list">어드민</a>
+                            <a href="/user/list">admin</a>
                         </c:when>
                     </c:choose>
-                    <a href="/user/logout">로그아웃</a>
+                    <button class="btn" id="btn">
+					    <i class="bx bx-user"></i>
+					    <%-- ${loginInfo.user_id} 님 --%>
+					  <div class="dropdown" id="dropdown">
+						  <a href="">
+						    <i class="bx bx-pen"></i>
+						    내가 쓴 글
+						  </a>
+						  <a href="/user/read?uid=${loginInfo.user_id}">
+						    <i class="bx bx-user"></i>
+						    마이페이지
+						  </a>
+						  <a href="/user/logout">
+						    <i class="bx bx-lock"></i>
+						    로그아웃
+						  </a>
+						</div>
+					  <!-- <i class="bx bx-chevron-down" id="arrow"></i> -->
+					</button>
+                    
                 </div>
             </c:if>
         </nav>
     </header>
+    
+    <script type="text/javascript">
+	    const dropdownBtn = document.getElementById("btn");
+	    const dropdownMenu = document.getElementById("dropdown");
+	    /* const toggleArrow = document.getElementById("arrow"); */
+
+	    const toggleDropdown = function () {
+	      dropdownMenu.classList.toggle("show");
+	      /* toggleArrow.classList.toggle("arrow"); */
+	    };
+	    
+	    dropdownBtn.addEventListener("click", function (e) {
+    	  e.stopPropagation();
+    	  toggleDropdown();
+    	});
+    
+    </script>
 
 </body>
 </html>

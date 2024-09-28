@@ -76,6 +76,23 @@
             text-decoration: underline;
         }
 
+        td form {
+            display: inline-block;
+        }
+
+        td form button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        td form button:hover {
+            background-color: #c82333;
+        }
+
         .pagination {
             display: flex;
             justify-content: center;
@@ -132,6 +149,7 @@
                     <th scope="col">번호</th>
                     <th scope="col">아이디</th>
                     <th scope="col">이름</th>
+                    <th scope="col">액션</th>
                 </tr>
             </thead>
             <tbody>
@@ -140,6 +158,12 @@
                     <td>${(pageResponseDTO.page - 1) * pageResponseDTO.size + status.count}</td>
                     <td><a href="read?uid=${user.user_id}">${user.user_id}</a></td>
                     <td>${user.user_name}</td>
+                    <td>
+                        <form action="remove" method="post" onsubmit="return confirm('Are you sure you want to remove this user?');">
+                            <input type="hidden" name="uid" value="${user.user_id}">
+                            <button type="submit">삭제</button>
+                        </form>
+                    </td>
                 </tr>
                 </c:forEach>
             </tbody>
@@ -148,6 +172,13 @@
     
     <jsp:include page="/WEB-INF/views/inc/page_nav.jsp"></jsp:include>
 </div>
+
+<script>
+	document.querySelector("#...").addEventListner("click", async e => {
+		const response = await fetch("http://localhost:8090/serch?keyword=" + value);
+		const jsonData = await response.json();
+	});
+</script>
 
 </body>
 </html>
