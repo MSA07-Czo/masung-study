@@ -12,10 +12,13 @@ import com.czo.masung.page.PageRequestDTO;
 public interface BoardRepository {
 
 	List<BoardVO> getList(PageRequestDTO pageRequestDTO);
+	List<BoardVO> getTopGoodList(PageRequestDTO pageRequestDTO);
+	List<BoardVO> getTopViewList(PageRequestDTO pageRequestDTO);
 	int getTotalCount(PageRequestDTO pageRequestDTO);
 
 	Optional<BoardVO> getRead(int board_number);
 	int remove(int board_number);
 	int modify(BoardVO board);
 	int register(BoardVO board);
+	int saveViewCount(BoardVO board);
 }
