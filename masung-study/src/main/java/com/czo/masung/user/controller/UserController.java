@@ -43,7 +43,12 @@ public class UserController {
 	
 	//@RequestMapping(value = "list", method = RequestMethod.GET)
 	@GetMapping("list")
-	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
+	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginInfo") == null) {
+			return "/user/login";
+		}
+		
 		if (bindingResult.hasErrors()) {
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
@@ -69,7 +74,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="read", method = RequestMethod.GET)
-	public String read(String uid, Model model) {
+	public String read(String uid, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginInfo") == null) {
+			return "/user/login";
+		}
 		
 		model.addAttribute("user", userService.getRead(uid));
 		
@@ -85,7 +94,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="modify", method = RequestMethod.GET)
-	public String modifyForm(String uid, Model model) {
+	public String modifyForm(String uid, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginInfo") == null) {
+			return "/user/login";
+		}
 		
 		model.addAttribute("user", userService.getRead(uid));
 		
