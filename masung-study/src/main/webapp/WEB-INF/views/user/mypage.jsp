@@ -96,7 +96,7 @@
 <%@ include file="/WEB-INF/views/inc/header.jsp" %>
 
 <div class="container">
-    <h1>회원 상세보기</h1>
+    <h1>${user.user_name}님 반갑습니다.</h1>
 
     <div class="info-group">
         <h3>

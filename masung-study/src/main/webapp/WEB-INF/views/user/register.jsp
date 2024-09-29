@@ -107,6 +107,7 @@
             <div class="form-group">
                 <label for="uid">아이디</label>
                 <input type="text" name="user_id" id="uid">
+                <p id="afterIdInput"></p>
                 <input type="button" id="idCheckButton" value="아이디 중복 확인">
             </div>
 
@@ -160,16 +161,27 @@
 
     <script>
         document.querySelector("#idCheckButton").addEventListener("click", async e => {
-            const uid = document.getElementById("uid").value;
-            const response = await fetch("http://localhost:8090/idCheck?uid=" + uid);
+            const response = await fetch("http://localhost:8090/idCheck?uid=" + uid.value);
             const jsonData = await response.json();
             
+            const uidInputNode = document.getElementById("uid");
+            const pNode = document.getElementById("afterIdInput");
+            console.log(pNode)
+            let oldTxtNode = pNode.childNodes[0]
+            console.log(oldTxtNode)
+            if (oldTxtNode == undefined) {
+            	oldTxtNode = pNode.appendChild(document.createTextNode(""));
+            }
+            
+            const newTxtNode = document.createTextNode(jsonData.result ? "현재 사용 중인 아이디입니다." : "사용 가능한 아이디입니다.");
+            
             if (jsonData.status === 1) {
-                alert(jsonData.result ? `아이디 [${uid}]는 사용 불가능합니다.` : `아이디 [${uid}]는 사용 가능합니다.`);
+            	const txtChange = pNode.replaceChild(newTxtNode, oldTxtNode);
             } else {
                 alert("서버 오류 발생");
             }
         });
+        
     </script>
 
 </body>

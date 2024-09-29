@@ -11,6 +11,7 @@ import com.czo.masung.user.service.UserService;
 import com.czo.masung.user.model.dto.UserDTO;
 import com.czo.masung.user.model.vo.UserVO;
 import com.czo.masung.page.PageRequestDTO;
+import com.czo.masung.page.PageResponseDTO;
 import com.czo.masung.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,11 +43,19 @@ public class UserController {
 	
 	//@RequestMapping(value = "list", method = RequestMethod.GET)
 	@GetMapping("list")
-	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
+	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginInfo") == null) {
+			return "/user/login";
+		}
+		
 		if (bindingResult.hasErrors()) {
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
-		model.addAttribute("pageResponseDTO", userService.getList(pageRequestDTO));
+		PageResponseDTO<UserDTO> pageResponseDTO = userService.getList(pageRequestDTO);
+		
+		model.addAttribute("pageResponseDTO", pageResponseDTO);
+		model.addAttribute("pageRequestDTO", pageRequestDTO);
 		
 		return "/user/list";
 	}
@@ -65,7 +74,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="read", method = RequestMethod.GET)
-	public String read(String uid, Model model) {
+	public String read(String uid, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginInfo") == null) {
+			return "/user/login";
+		}
 		
 		model.addAttribute("user", userService.getRead(uid));
 		
@@ -81,7 +94,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="modify", method = RequestMethod.GET)
-	public String modifyForm(String uid, Model model) {
+	public String modifyForm(String uid, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("loginInfo") == null) {
+			return "/user/login";
+		}
 		
 		model.addAttribute("user", userService.getRead(uid));
 		
@@ -111,7 +128,7 @@ public class UserController {
 					userService.modify_recentLogin(userVO);
 					userService.insert_loginHis(userVO);
 					session.setAttribute("loginInfo", user);
-					cookie.setMaxAge(60 * 10);
+					cookie.setMaxAge(60 * 60 * 24);
 					response.addCookie(cookie);
 					
 					return "redirect:/";
