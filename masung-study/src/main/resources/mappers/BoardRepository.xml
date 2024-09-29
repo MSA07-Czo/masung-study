@@ -3,13 +3,50 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.czo.masung.board.repository.BoardRepository">
+	<sql id="search">
+	  <where>
+	    <if test="keyword != null and keyword.length() > 0">
+	      <if test="titleSearch or writerSearch">
+	        (
+	        <if test="titleSearch">
+	          board_title LIKE concat('%', #{keyword}, '%')
+	        </if>
+	        <if test="titleSearch and writerSearch">
+	          OR
+	        </if>
+	        <if test="writerSearch">
+	          u.user_name LIKE concat('%', #{keyword}, '%')
+	        </if>
+	        )
+	      </if>
+	    </if>
+	
+	    <if test="from != null and to != null">
+	      <trim prefix="AND">
+	        board_reg_date BETWEEN #{from} AND #{to}
+	      </trim>
+	    </if>
+	    <if test="from != null and to == null">
+	      <trim prefix="AND">
+	        board_reg_date >= #{from}
+	      </trim>
+	    </if>
+	    <if test="from == null and to != null">
+	      <trim prefix="AND">
+	        <![CDATA[
+	        board_reg_date <= #{to}
+	        ]]>
+	      </trim>
+	    </if>
+	  </where>
+	</sql>
 	
 	<select id="getList" resultType="com.czo.masung.board.model.vo.BoardVO">
 		SELECT 
 			b.*,
 			u.user_name 
 		FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
-		<!-- <include refid="search"/>    검색 구현중  -->
+		<include refid="search"/>
 		order by board_number desc
 		limit #{skip}, #{size}
 	</select>
@@ -38,6 +75,7 @@
 
 	<select id="getTotalCount" resultType="int">
 		SELECT count(*) FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
+		<include refid="search"/>
 	</select>	
 
 	<select id="getRead" resultType="com.czo.masung.board.model.vo.BoardVO">

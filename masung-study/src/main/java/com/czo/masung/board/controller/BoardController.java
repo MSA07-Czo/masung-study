@@ -85,6 +85,7 @@ public class BoardController {
 
 	@GetMapping("/board/read")
 	public String read(int board_number, PageRequestDTO pageRequestDTO, Model model) {
+		System.out.println("게시물 번호 내용: " + board_number);
 		//조회수 증가
 		boardService.increaseViewcnt(board_number);
 
@@ -110,9 +111,9 @@ public class BoardController {
 
 	@PostMapping("/board/modify")
 	public String modify(BoardDTO board, PageRequestDTO pageRequestDTO) {
-
+		System.out.println("게시물 수정 내용: " + board);
 		boardService.modify(mapperUtil.map(board, BoardVO.class));
 
-		return "redirect:/board/read?id=" + board.getBoard_number() + "&" + pageRequestDTO.getLink();
+		return "redirect:/board/read?board_number=" + board.getBoard_number() + "&" + pageRequestDTO.getLink();
 	}
 }

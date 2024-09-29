@@ -12,23 +12,23 @@
 	<jsp:include page="/WEB-INF/views/inc/header.jsp"></jsp:include>
 
 	<h1>전체 게시글보기</h1>
-	<!--  
+
 	<div class="row content">
 		<div class="col">
 			<div class="card">
 				<div class="card-body">
-					<h5 class="card-title">검색</h5>
-					<form action="/board/list" method="get" name="searchForm"
-						id="searchForm">
+					<h3 class="card-title">검색</h3>
+					<form action="/board/list" method="get" name="searchForm" id="searchForm">
 						<input type="hidden" name="page" value=1>
 
 						<div class="mb-3">
-							<input type="checkbox" name="types" value="title"
-								<c:forEach var="type" items="${pageRequestDTO.types}">${type == 'title' ? 'checked' : '' }</c:forEach>>제목
-							<input type="checkbox" name="types" value="writer"
-								<c:forEach var="type" items="${pageRequestDTO.types}">${type == 'writer' ? 'checked' : '' }</c:forEach>>작성자
-							<input type="text" name="keyword" class="form-control"
-								value='${pageRequestDTO.keyword}'>
+							<input type="checkbox" name="titleSearch" id="titleSearch"
+								value="true" ${pageRequestDTO.titleSearch ? 'checked' : ''}>
+							<label for="titleSearch">제목</label> 
+							<input type="checkbox" name="writerSearch" id="writerSearch" 
+								value="true" ${pageRequestDTO.writerSearch ? 'checked' : ''}> 
+								<label for="writerSearch">작성자</label> 
+							<input type="text" name="keyword" class="form-control" value='${pageRequestDTO.keyword}'>
 						</div>
 						<div class="input-group mb-3 dueDateDiv">
 							<input type="date" name="from" class="form-control"
@@ -47,7 +47,7 @@
 
 		</div>
 	</div>
-	-->
+
 	<div class="card-body">
 		<h5 class="card-title">${pageResponseDTO.total}개의글</h5>
 
@@ -78,7 +78,7 @@
 						<td>${board.board_number}</td>
 						<td><a
 							href="read?board_number=${board.board_number}&${pageRequestDTO.link}">
-							<c:if test="${board.parent_board_number != 0}">ㄴ</c:if>${board.board_title}</a></td>
+								<c:if test="${board.parent_board_number != 0}">ㄴ</c:if>${board.board_title}</a></td>
 						<td>${board.user_name}</td>
 						<td>${board.board_reg_date}</td>
 						<td>${board.board_viewcnt}</td>
@@ -90,5 +90,18 @@
 	<jsp:include page="/WEB-INF/views/inc/page_nav.jsp"></jsp:include>
 
 	<a href="register">등록</a>
+<script>
+const searchForm = document.getElementById("searchForm");
+searchForm.addEventListener("reset", e => {
+	e.preventDefault();
+	e.stopPropagation();
+	searchForm.size.value = 10;
+	searchForm.titleSearch.checked = false;
+	searchForm.writerSearch.checked = false;
+	searchForm.keyword.value = "";
+	searchForm.from.value = "";
+	searchForm.to.value = "";
+});
+</script>
 </body>
 </html>
