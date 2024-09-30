@@ -32,10 +32,12 @@ public class BoardController {
 
 	@RequestMapping("/board/list")
 	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
+		System.out.println("pageRequestDTO 내용1: " + pageRequestDTO);
 		if (pageRequestDTO.getPage() == 0 && bindingResult.hasErrors()) {
 			log.error("Validation errors: " + bindingResult.getAllErrors());
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
+		System.out.println("pageRequestDTO 내용2: " + pageRequestDTO);
 		PageResponseDTO<BoardDTO> pageResponseDTO = boardService.getList(pageRequestDTO);
 
 		model.addAttribute("pageResponseDTO", pageResponseDTO);

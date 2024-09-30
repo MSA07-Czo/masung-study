@@ -4,41 +4,33 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.czo.masung.board.repository.BoardRepository">
 	<sql id="search">
-	  <where>
-	    <if test="keyword != null and keyword.length() > 0">
-	      <if test="titleSearch or writerSearch">
-	        (
-	        <if test="titleSearch">
-	          board_title LIKE concat('%', #{keyword}, '%')
+	    <where>
+	        <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'title'">
+	                    board_title LIKE concat('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'writer'">
+	                    u.user_name LIKE concat('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'both'">
+	                    (board_title LIKE concat('%', #{keyword}, '%')
+	                    OR u.user_name LIKE concat('%', #{keyword}, '%'))
+	                </when>
+	            </choose>
 	        </if>
-	        <if test="titleSearch and writerSearch">
-	          OR
-	        </if>
-	        <if test="writerSearch">
-	          u.user_name LIKE concat('%', #{keyword}, '%')
-	        </if>
-	        )
-	      </if>
-	    </if>
 	
-	    <if test="from != null and to != null">
-	      <trim prefix="AND">
-	        board_reg_date BETWEEN #{from} AND #{to}
-	      </trim>
-	    </if>
-	    <if test="from != null and to == null">
-	      <trim prefix="AND">
-	        board_reg_date >= #{from}
-	      </trim>
-	    </if>
-	    <if test="from == null and to != null">
-	      <trim prefix="AND">
-	        <![CDATA[
-	        board_reg_date <= #{to}
-	        ]]>
-	      </trim>
-	    </if>
-	  </where>
+	        <if test="from != null and from != ''">
+	            <![CDATA[
+	            AND board_reg_date >= #{from}
+	            ]]>
+	        </if>
+	        <if test="to != null and to != ''">
+	            <![CDATA[
+	            AND board_reg_date <= #{to}
+	            ]]>
+	        </if>
+	    </where>
 	</sql>
 	
 	<select id="getList" resultType="com.czo.masung.board.model.vo.BoardVO">

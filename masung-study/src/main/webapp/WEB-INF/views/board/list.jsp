@@ -22,21 +22,22 @@
 						<input type="hidden" name="page" value=1>
 
 						<div class="mb-3">
-							<input type="checkbox" name="titleSearch" id="titleSearch"
-								value="true" ${pageRequestDTO.titleSearch ? 'checked' : ''}>
-							<label for="titleSearch">제목</label> 
-							<input type="checkbox" name="writerSearch" id="writerSearch" 
-								value="true" ${pageRequestDTO.writerSearch ? 'checked' : ''}> 
-								<label for="writerSearch">작성자</label> 
-							<input type="text" name="keyword" class="form-control" value='${pageRequestDTO.keyword}'>
+						    <select name="searchType" class="form-select">
+						        <option value="title" ${pageRequestDTO.searchType == 'title' ? 'selected' : ''}>제목</option>
+						        <option value="writer" ${pageRequestDTO.searchType == 'writer' ? 'selected' : ''}>작성자</option>
+						        <option value="both" ${pageRequestDTO.searchType == 'both' ? 'selected' : ''}>제목+작성자</option>
+						    </select>
+						    <input type="text" name="keyword" class="form-control" value='${pageRequestDTO.keyword}'>
 						</div>
+						
 						<div class="input-group mb-3 dueDateDiv">
-							<input type="date" name="from" class="form-control"
-								value="${pageRequestDTO.from}"> <input type="date"
-								name="to" class="form-control" value="${pageRequestDTO.to}">
+						    <input type="date" name="from" class="form-control" 
+						           value="${not empty pageRequestDTO.from ? pageRequestDTO.from : ''}">
+						    <input type="date" name="to" class="form-control" 
+						           value="${not empty pageRequestDTO.to ? pageRequestDTO.to : ''}">
 						</div>
 						<div class="input-group mb-3">
-							<div class="float-end">
+							<div>
 								<button class="btn btn-primary" type="submit">검색</button>
 								<button class="btn btn-info clearBtn" type="reset">초기화</button>
 							</div>
