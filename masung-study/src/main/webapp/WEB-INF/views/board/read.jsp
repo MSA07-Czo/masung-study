@@ -48,11 +48,18 @@
 			<a	href="modify?board_number=${param.board_number}&${pageRequestDTO.link}"
 				class="btn btn-primary me-2">수정</a>
 			<a	href="remove?board_number=${param.board_number}&${pageRequestDTO.link}"
-				class="btn btn-danger me-2">삭제</a>
+				class="btn btn-danger me-2" onclick="return confirmDelete();">삭제</a>
 		</c:if>
 
 		<a href="list?${pageRequestDTO.link}" class="btn btn-secondary">목록</a>
 		<a href="answerRegister?parent_board_number=${board.board_number}">답변 게시글 작성</a>
 	</div>
+	
+	<script>
+        function confirmDelete() {
+            return confirm("정말 삭제하시겠습니까?");
+        }
+    </script>
+	
 </body>
 </html>

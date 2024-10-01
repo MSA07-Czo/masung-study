@@ -32,10 +32,12 @@ public class BoardController {
 
 	@RequestMapping("/board/list")
 	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
+		System.out.println("pageRequestDTO 내용1: " + pageRequestDTO);
 		if (pageRequestDTO.getPage() == 0 && bindingResult.hasErrors()) {
 			log.error("Validation errors: " + bindingResult.getAllErrors());
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
+		System.out.println("pageRequestDTO 내용2: " + pageRequestDTO);
 		PageResponseDTO<BoardDTO> pageResponseDTO = boardService.getList(pageRequestDTO);
 
 		model.addAttribute("pageResponseDTO", pageResponseDTO);
@@ -85,6 +87,7 @@ public class BoardController {
 
 	@GetMapping("/board/read")
 	public String read(int board_number, PageRequestDTO pageRequestDTO, Model model) {
+		System.out.println("게시물 번호 내용: " + board_number);
 		//조회수 증가
 		boardService.increaseViewcnt(board_number);
 
@@ -110,9 +113,9 @@ public class BoardController {
 
 	@PostMapping("/board/modify")
 	public String modify(BoardDTO board, PageRequestDTO pageRequestDTO) {
-
+		System.out.println("게시물 수정 내용: " + board);
 		boardService.modify(mapperUtil.map(board, BoardVO.class));
 
-		return "redirect:/board/read?id=" + board.getBoard_number() + "&" + pageRequestDTO.getLink();
+		return "redirect:/board/read?board_number=" + board.getBoard_number() + "&" + pageRequestDTO.getLink();
 	}
 }

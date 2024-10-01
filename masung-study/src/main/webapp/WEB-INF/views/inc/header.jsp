@@ -105,7 +105,7 @@
             margin-left: 1rem;
         }
 
-        .btn {
+        header .btn {
             padding: 0rem 1rem;
             background-color: rgba(0,0,0,0);
             border: none;
