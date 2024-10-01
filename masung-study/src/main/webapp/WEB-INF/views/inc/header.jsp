@@ -105,7 +105,7 @@
             margin-left: 1rem;
         }
 
-        .btn {
+        header .btn {
             padding: 0rem 1rem;
             background-color: rgba(0,0,0,0);
             border: none;
@@ -171,13 +171,11 @@
 	      dropdownMenu.classList.toggle("show");
 	      /* toggleArrow.classList.toggle("arrow"); */
 	    };
-	    
+
 	    if (dropdownBtn) {
 		    dropdownBtn.addEventListener("click", function (e) {
 	    	  e.stopPropagation();
 	    	  toggleDropdown();
-	    	});
-	    }
     </script>
 
 </body>

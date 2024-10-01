@@ -1,7 +1,5 @@
 package com.czo.masung.board.model.dto;
 
-import java.time.LocalDate;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -24,8 +22,8 @@ public class BoardDTO {
 	private String    board_title;
 	private String    board_content;
 	private int       board_viewcnt;
-	private LocalDate board_reg_date;
-	private LocalDate board_last_updated;
+	private String    board_reg_date;
+	private String    board_last_updated;
 	private int       parent_board_number;
 	private int       board_category_number;
 	private String    board_category_name;
