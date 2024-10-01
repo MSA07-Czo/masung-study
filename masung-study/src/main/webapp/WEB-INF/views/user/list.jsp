@@ -5,157 +5,219 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    
-    <!-- <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script> -->
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 목록</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #000;
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 3rem auto;
+        background-color: white;
+        padding: 2rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        color: #000;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+
+    .card {
+        border: none;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-body {
+        padding: 0;
+    }
+
+    .btn-primary {
+        padding: 0.8rem 1.6rem;
+        background-color: #000;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+        background-color: white;
+    }
+
+    th, td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f7f7f7;
+        font-weight: bold;
+        color: #000;
+    }
+
+    td {
+        color: #333;
+    }
+
+    td a {
+        color: #000;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    td a:hover {
+        text-decoration: underline;
+    }
+
+    td form button {
+        background-color: #000;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    td form button:hover {
+        background-color: #333;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0;
+    }
+
+	.pagination li {
+        margin: 0 0.5rem;
+    }
+    
+    .pagination input[type="submit"] {
+        background-color: transparent;
+        border: 1px solid black;
+        color: black;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border-radius: 5px;
+    }
+    
+    .pagination input[type="submit"].active {
+        background-color: black;
+        color: white;
+    }
+    
+	.pagination input[type="submit"]:hover {
+        background-color: black;
+        color: white;
+    }
+
+    .pagination a {
+        background-color: transparent;
+        border: 1px solid black;
+        color: black;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border-radius: 5px;
+    }
+
+    .pagination a:hover {
+        background-color: #000;
+        color: white;
+    }
+    
+    #page-prev,
+    #page-next {
+        visibility: hidden; /* instead of display: none */
+    	position: absolute;
+    }
+    
+    #page-prev + label,
+    #page-next + label {
+	    cursor: pointer;
+	    display: inline-block;
+	    vertical-align: bottom;
+	    font-size: 1.5rem;
+	    position: relative;
+	    top: 5px;
+    }
+    
+    #page-prev + label:hover,
+	#page-next + label:hover {
+	    color: #666666;
+	}
+    
+    /* Remove bullet points and styling for older browsers */
+    .pagination li::marker {
+        content: none;
+    }
+	/* Ensure active and hover states are visually distinct */
+    .pagination .active {
+        background-color: black;
+        color: white;
+    }
+    
+    .pagination li.active input[type="submit"] {
+        background-color: black;
+        color: white;
+        border-color: black;
+    }
+
+    @media (max-width: 768px) {
+        table, th, td {
+            font-size: 0.9rem;
         }
 
-        header {
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 3rem auto;
-            background-color: white;
-            padding: 2rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        h1 {
-            font-size: 2rem;
-            color: #007bff;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 1rem;
-        }
-        
         .btn-primary {
-            padding: 0.6rem 1.2rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.7rem 1.4rem;
         }
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
+    @media (max-width: 480px) {
+        .container {
+            padding: 1.5rem;
         }
 
         table, th, td {
-            border: 1px solid #ddd;
+            font-size: 0.8rem;
         }
-
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f8f9fa;
-            color: #333;
-            font-weight: bold;
-        }
-
-        td a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        td a:hover {
-            text-decoration: underline;
-        }
-
-        td form {
-            display: inline-block;
-        }
-
-        td form button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        td form button:hover {
-            background-color: #c82333;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .pagination a {
-            margin: 0 0.5rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            color: #007bff;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .pagination a:hover {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .pagination .active {
-            background-color: #007bff;
-            color: white;
-            border: none;
-        }
-
-        @media (max-width: 768px) {
-            table, th, td {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 1.5rem;
-            }
-
-            table, th, td {
-                font-size: 0.8rem;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/inc/header.jsp" %>
@@ -169,34 +231,12 @@
                     <!-- <h5 class="card-title">검색</h5> -->
                     <form action="/user/list" method="get" name="searchForm" id="searchForm">
                     	<input type="hidden" name="page" value=1>
-                        <%-- <div class="mb-3">
-                            <select name="size" id="size">
-                            	<c:forTokens var="size" items="10,20,30,50,100" delims=",">
-                            		<option value="${size}" ${pageRequestDTO.size == size ? 'selected' : '' }>${size}</option>
-                            	</c:forTokens>
-                            </select>
-                        </div> --%>
-                    	
-                        <%-- <div class="mb-3">
-                            <input type="checkbox" name="finished" id="finished" value="1" ${pageRequestDTO.finished ? 'checked' : '' }>완료여부
-                        </div> --%>
                         <div class="mb-3">
-                            <%-- <input type="checkbox" name="types" value="title"
-                            	<c:forEach var="type" items="${pageRequestDTO.types}">${type == 'user_id' ? 'checked' : '' }</c:forEach>  
-                            >아이디
-                            <input type="checkbox" name="types" value="writer"
-                            	<c:forEach var="type" items="${pageRequestDTO.types}">${type == 'user_email' ? 'checked' : '' }</c:forEach> 
-                            >이메일 --%>
-                            <input type="text"  name="keyword" class="form-control" placeholder="검색" value ='${pageRequestDTO.keyword}' >
+                            <input type="text"  name="keyword" id="keyword" class="form-control" placeholder="검색" value ='${pageRequestDTO.keyword}' >
                         </div>
-                        <%-- <div class="input-group mb-3 dueDateDiv">
-                            <input type="date" name="from" class="form-control" value="${pageRequestDTO.from}">
-                            <input type="date" name="to" class="form-control"  value="${pageRequestDTO.to}">
-                        </div> --%>
                         <div class="input-group">
                             <div class="float-end">
-                                <button class="btn-primary" type="submit">검색</button>
-                                <!-- <button class="btn btn-info clearBtn" type="reset">초기화</button> -->
+                                <button class="searchBtn" type="submit">검색</button>
                             </div>
                         </div>
                     </form>
@@ -219,7 +259,7 @@
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="userTableBody">
                 <c:forEach var="user" items="${pageResponseDTO.list}" varStatus="status">
                 <tr>
                     <td>${(pageResponseDTO.page - 1) * pageResponseDTO.size + status.count}</td>
@@ -227,7 +267,7 @@
                     <td>${user.user_name}</td>
                     <td>${user.user_email}</td>
                     <td>
-                        <form action="remove" method="post" onsubmit="return confirm('Are you sure you want to remove this user?');">
+                        <form action="remove" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
                             <input type="hidden" name="uid" value="${user.user_id}">
                             <button type="submit">삭제</button>
                         </form>
@@ -236,29 +276,159 @@
                 </c:forEach>
             </tbody>
         </table>
+        
+        <template id="userrow">
+        	<tr>
+        		<td></td>
+        		<td><a href="read?uid=${user.user_id}"></a></td>
+        		<td></td>
+        		<td></td>
+        		<td>
+        			<form action="remove" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+                        <input type="hidden" name="uid" value="${user.user_id}">
+                        <button type="submit">삭제</button>
+                    </form>
+        		</td>
+        	</tr>
+        </template>
     </div>
     
-    <jsp:include page="/WEB-INF/views/inc/page_nav.jsp"></jsp:include>
+    <div>
+   		<form action="/user/list" method="get" name="pageForm" id="pageForm">
+   		<input type="hidden" name="keyword" value='${pageRequestDTO.keyword}'>
+   		<ul class="pagination">
+			<c:if test="${pageResponseDTO.prev}">
+				<li class="page-item">
+					<input type="submit" class="page-link" id="page-prev" name="page" data-param="${pageRequestDTO.getParam(pageResponseDTO.begin-1)}" value="${pageResponseDTO.begin-1}">
+					<label for="page-prev">◀︎</label>
+				</li>
+			</c:if>
+	
+			<c:forEach var="num" begin="${pageResponseDTO.begin}" end="${pageResponseDTO.end}">
+				<li class="page-item ${pageResponseDTO.page == num ? 'active' : ''}">
+					<input type="submit" class="page-link" name="page" data-param="${pageRequestDTO.getParam(num)}" value="${num}">
+				</li>
+			</c:forEach>
+	
+			<c:if test="${pageResponseDTO.next}">
+				<li class="page-item">
+					<input type="submit" class="page-link" id="page-next" name="page" data-param="${pageRequestDTO.getParam(pageResponseDTO.end+1)}" value="${pageResponseDTO.end+1}">
+					<label for="page-next">▶︎</label>
+				</li>
+			</c:if>
+		</ul>
+		</form>
+    	
+<%--     	<template id="pagenav">		
+			<c:if test="${pageResponseDTO.prev}">
+				<li class="page-item">
+				<a class="page-link" href="#;" data-param="${pageRequestDTO.getParam(pageResponseDTO.begin-1)}">이전</a></li>
+			</c:if>
+			<div id="page-number">
+			<li><input type="submit" class="page-link" name="page"></li>
+			</div>
+			<c:if test="${pageResponseDTO.next}">
+				<li class="page-item"><a class="page-link" href="#;"
+					data-param="${pageRequestDTO.getParam(pageResponseDTO.end+1)}">다음</a></li>
+			</c:if>
+
+		</template> --%>
+    </div>
 </div>
 
 <script>
-	const searchForm = document.getElementById("searchForm");
-	searchForm.addEventListener("reset", e => {
+	document.querySelector(".searchBtn").addEventListener("click", async e => {
 		e.preventDefault();
-		e.stopPropagation();
-		searchForm.size.value = 10;
-		/* searchForm.finished.checked = false; */
-		searchForm.types.forEach(item => item.checked = false);
-		searchForm.keyword.value = "";
-		/* searchForm.from.value = "";
-		searchForm.to.value = ""; */
+		const response = await fetch("/search?keyword=" + keyword.value);
+		const jsonData = await response.json();
+		const list = jsonData.list;
+		const userRow = document.querySelector("#userrow");
+		
+		const tbody = document.querySelector("tbody");
+		tbody.innerHTML = "";
+		
+		for (let i=0; i<list.length; i++){
+			const newRow = userRow.content.cloneNode(true);
+			let td = newRow.querySelectorAll("td");
+			let link = newRow.querySelector("td a");
+			
+			td[0].textContent = ${(pageResponseDTO.page - 1) * pageResponseDTO.size} + i + 1;
+			link.textContent = list[i].user_id;
+			link.href = "read?uid=" + list[i].user_id
+			td[2].textContent = list[i].user_name;
+			td[3].textContent = list[i].user_email;
+			
+			tbody.appendChild(newRow);
+		}
 	});
 	
-	
-	/* document.querySelector("#...").addEventListner("submit", async e => {
-		const response = await fetch("http://localhost:8090/serch?keyword=" + value);
-		const jsonData = await response.json();
-	}); */
+	document.querySelectorAll(".page-link").forEach(item => {
+		item.addEventListener('click', async e => {
+			e.preventDefault();
+			e.stopPropagation();
+			
+			const param = e.target.getAttribute("data-param");
+			console.log(param);
+			const urlParams = new URLSearchParams(param);
+			
+			let page = urlParams.get("page");
+			
+			console.log(keyword.value)
+			console.log(page)
+			
+			const response = await fetch("/pagination?keyowrd=" + keyword.value + "?page=" + page);
+			const jsonData = await response.json();
+			const list = jsonData.list;
+			
+			console.log(jsonData)
+
+			const pageNav = document.querySelector("#pagenav div");
+			const userRow = document.querySelector("#userrow");
+			const tbody = document.querySelector("tbody");
+			const ul = document.querySelector("ul");
+			
+			tbody.innerHTML = "";
+			ul.innerHTML = "";
+			console.log(ul);
+			
+			for (let i=0; i<list.length; i++){
+				const newRow = userRow.content.cloneNode(true);
+				let td = newRow.querySelectorAll("td");
+				let link = newRow.querySelector("td a");
+				
+				td[0].textContent = ${(page-1) * pageResponseDTO.size} + i + 1;
+				link.textContent = list[i].user_id;
+				link.href = "read?uid=" + list[i].user_id
+				td[2].textContent = list[i].user_name;
+				td[3].textContent = list[i].user_email;
+				
+				tbody.appendChild(newRow);
+			}
+			
+ 			for (let i=jsonData.begin; i<=jsonData.end; i++) {
+				const clone = pageNav.content.cloneNode(true);
+				
+				let li = clone.querySelector("li");
+				let pageNum = clone.querySelector("li input");
+				if (page === i) {
+					li.setAttribute("class", "page-item active");
+				} else {
+					li.setAttribute("class", "page-item");
+				}
+				
+				pageNum.setAttribute("data-param", "${pageRequestDTO.getParam(" + i + ")}");
+				pageNum.setAttribute("value", i);
+				
+				
+				pageNum.textContent = i;
+				console.log(jsonData)
+
+				
+				ul.appendChild(clone);
+			}
+			
+		})
+	});
 </script>
 
 </body>

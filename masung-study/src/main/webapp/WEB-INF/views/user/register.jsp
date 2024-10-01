@@ -161,14 +161,13 @@
 
     <script>
         document.querySelector("#idCheckButton").addEventListener("click", async e => {
-            const response = await fetch("http://localhost:8090/idCheck?uid=" + uid.value);
+            const response = await fetch("/idCheck?uid=" + uid.value);
             const jsonData = await response.json();
             
-            const uidInputNode = document.getElementById("uid");
             const pNode = document.getElementById("afterIdInput");
-            console.log(pNode)
+            
             let oldTxtNode = pNode.childNodes[0]
-            console.log(oldTxtNode)
+            
             if (oldTxtNode == undefined) {
             	oldTxtNode = pNode.appendChild(document.createTextNode(""));
             }

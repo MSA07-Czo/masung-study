@@ -52,6 +52,7 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
+		
 		PageResponseDTO<UserDTO> pageResponseDTO = userService.getList(pageRequestDTO);
 		
 		model.addAttribute("pageResponseDTO", pageResponseDTO);
