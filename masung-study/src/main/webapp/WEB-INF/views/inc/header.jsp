@@ -23,7 +23,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background-color: #007bff;
+            background-color: #222222;
             color: white;
         }
 
@@ -171,14 +171,11 @@
 	      dropdownMenu.classList.toggle("show");
 	      /* toggleArrow.classList.toggle("arrow"); */
 	    };
+
 	    if (dropdownBtn) {
 		    dropdownBtn.addEventListener("click", function (e) {
 	    	  e.stopPropagation();
 	    	  toggleDropdown();
-	    	});    	
-	    }
-
-    
     </script>
 
 </body>
