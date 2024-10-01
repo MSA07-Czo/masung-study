@@ -171,11 +171,13 @@
 	      dropdownMenu.classList.toggle("show");
 	      /* toggleArrow.classList.toggle("arrow"); */
 	    };
-	    
-	    dropdownBtn.addEventListener("click", function (e) {
-    	  e.stopPropagation();
-    	  toggleDropdown();
-    	});
+	    if (dropdownBtn) {
+		    dropdownBtn.addEventListener("click", function (e) {
+	    	  e.stopPropagation();
+	    	  toggleDropdown();
+	    	});    	
+	    }
+
     
     </script>
 
