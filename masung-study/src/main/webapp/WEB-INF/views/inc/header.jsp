@@ -133,7 +133,7 @@
                 <div class="login-info">
 
                     <c:choose>
-                        <c:when test="${loginInfo.user_role == 'teacher'}">
+                        <c:when test="${loginInfo.user_role == 'admin'}">
                             <a href="/user/list">admin</a>
                         </c:when>
                     </c:choose>
@@ -141,7 +141,7 @@
 					    <i class="bx bx-user"></i>
 					    <%-- ${loginInfo.user_id} 님 --%>
 					  <div class="dropdown" id="dropdown">
-						  <a href="">
+						  <a href="/noservice">
 						    <i class="bx bx-pen"></i>
 						    내가 쓴 글
 						  </a>

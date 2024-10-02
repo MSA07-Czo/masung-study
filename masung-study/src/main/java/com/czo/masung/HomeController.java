@@ -27,4 +27,10 @@ public class HomeController {
 
 		return "home";
 	}
+	
+	@RequestMapping(value = "/noservice", method = RequestMethod.GET)
+	public String noService() {
+
+		return "ReadyForService";
+	}
 }

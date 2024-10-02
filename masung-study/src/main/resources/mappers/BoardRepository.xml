@@ -81,7 +81,7 @@
 	INNER JOIN 
 	    Users u ON b.user_id = u.user_id
 	LEFT JOIN 
-	    board_category bc ON b.board_category_number = bc.board_category_number
+	    Board_Category bc ON b.board_category_number = bc.board_category_number
 	WHERE 
 	    b.board_number = #{board_number}
 	</select>	

@@ -66,39 +66,59 @@
         .password-group input {
             width: 100%;
         }
-
-        .password-group button {
-            width: 70px;
-            padding: 0.75rem;
-            font-size: 0.9rem;
-            border: 1px solid #333;
-            background-color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .password-group button:hover {
-            background-color: #f0f0f0;
-        }
-
-        .gender-group {
+        
+        .select-group {
             display: flex;
             justify-content: left;
         }
-
-        .gender-group button {
-            width: 30%;
+        
+        input[type="radio"] {
+            display: none;
+        }
+        
+        input[type="radio"]:checked + label {
+            background-color: #333;
+            color: white;
+        }
+        
+        .select-group label {
             padding: 0.75rem;
-            font-size: 1rem;
             border: 1px solid #222;
-            background-color: #fff;
-            transition: background-color 0.3s ease;
+            font-size: 1rem;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            width: 25%;
+            text-align: center;
+            background-color: white;
+            color: #222;
+        }
+        
+        /* Rounded border on the leftmost and rightmost labels */
+        label:first-of-type {
+            border-radius: 5px 0 0 5px;
         }
 
-        .gender-group button.selected {
-            background-color: #222;
-            color: #fff;
+        label:last-of-type {
+            border-radius: 0 5px 5px 0;
+        }
+
+        /* Optional styling for text */
+        .label-text {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        /* Hover effect: when hovering over a non-selected label */
+        input[type="radio"]:not(:checked) + label:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        /* Ensure the checked label turns white when hovering over an unchecked label */
+        input[type="radio"]:not(:checked) + label:hover ~ input[type="radio"]:checked + label {
+            background-color: white;
+            color: black;
         }
 
         .actions {
@@ -106,7 +126,7 @@
             margin-top: 1.5rem;
         }
 
-        .actions button {
+        .actions input {
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
             border: none;
@@ -117,7 +137,7 @@
             transition: background-color 0.3s ease;
         }
 
-        .actions button:hover {
+        .actions input:hover {
             background-color: #444444;
         }
         
@@ -128,61 +148,65 @@
 <div class="container">
     <h1>회원 정보 수정</h1>
 	<form action="modify" method="post">
-    <div class="form-group">
-        <label for="id">아이디</label>
-        <input type="text" id="id" value="${user.user_id}" disabled>
-    </div>
-
-    <div class="form-group">
-        <label for="password">비밀번호</label>
-        <div class="password-group">
-            <input type="password" id="password" value="${user.user_pwd}" disabled>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="name">이름</label>
-        <input type="text" id="name" value="${user.user_name}">
-    </div>
-    
-    <div class="form-group">
-        <label for="email">이메일</label>
-        <input type="email" id="email" value="${user.user_email}">
-    </div>
-
-    <div class="form-group">
-        <label for="phone">전화번호</label>
-        <input type="text" id="phone" value="${user.user_phone}">
-    </div>
-    
-    <div class="form-group">
-        <label for="birth_date">생년월일</label>
-        <input type="date" id="birth_date" value="${user.user_birth_date}">
-    </div>
-
-    <div class="form-group">
-        <label>성별</label>
-        <div class="gender-group">
-            <button class="gender-button <c:if test='${user.user_gender == "M"}'>selected</c:if>" onclick="selected">남성</button>
-            <button class="gender-button <c:if test='${user.user_gender == "F"}'>selected</c:if>" onclick="selected">여성</button>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label>직업</label>
-        <div class="gender-group">
-            <button class="gender-button <c:if test='${user.user_role == "student"}'>selected</c:if>">학생</button>
-            <button class="gender-button <c:if test='${user.user_role == "teacher"}'>selected</c:if>">교수</button>
-        </div>
-    </div>
-    
-    <div>
-    	<hr style="border:solid 0.01px #dddddd">
-    </div>
-
-    <div class="actions">
-        <button type="submit" >확인</button>
-    </div>
+	    <div class="form-group">
+	        <label for="id">아이디</label>
+	        <input type="text" id="id" name="user_id" value="${user.user_id}">
+	    </div>
+	
+	    <div class="form-group">
+	        <label for="password">비밀번호</label>
+	        <div class="password-group">
+	            <input type="password" id="password" name="user_pwd" value="${user.user_pwd}">
+	        </div>
+	    </div>
+	
+	    <div class="form-group">
+	        <label for="name">이름</label>
+	        <input type="text" id="name" name="user_name" value="${user.user_name}">
+	    </div>
+	    
+	    <div class="form-group">
+	        <label for="email">이메일</label>
+	        <input type="email" id="email" name="user_email" value="${user.user_email}">
+	    </div>
+	
+	    <div class="form-group">
+	        <label for="phone">전화번호</label>
+	        <input type="text" id="phone" name="user_phone" value="${user.user_phone}">
+	    </div>
+	    
+	    <div class="form-group">
+	        <label for="birth_date">생년월일</label>
+	        <input type="date" id="birth_date" name="user_birth_date" value="${user.user_birth_date}">
+	    </div>
+	
+	    <div class="form-group">
+	        <label>성별</label>
+	        <div class="select-group">
+	            <input type="radio" id="male" name="user_gender" value="M" <c:if test='${user.user_gender == "M"}'>checked</c:if>>
+	            <label for="male">남성</label>
+	            <input type="radio" id="female" name="user_gender" value="F" <c:if test='${user.user_gender == "F"}'>checked</c:if>>
+	            <label for="female">여성</label>
+	        </div>
+	    </div>
+	    
+	    <div class="form-group">
+	        <label>직업</label>
+	        <div class="select-group">
+	            <input type="radio" id="student" name="user_role" value="student" <c:if test='${user.user_role == "student"}'>checked</c:if>>
+	            <label for="student">학생</label>
+	            <input type="radio" id="teacher" name="user_role" value="teacher" <c:if test='${user.user_role == "teacher"}'>checked</c:if>>
+	            <label for="teacher">교수</label>
+	        </div>
+	    </div>
+	    
+	    <div>
+	    	<hr style="border:solid 0.01px #dddddd">
+	    </div>
+	
+	    <div class="actions">
+	        <input type="submit" value="확인">
+	    </div>
     </form>
 
 </div>

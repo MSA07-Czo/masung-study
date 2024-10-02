@@ -1,14 +1,21 @@
 package com.czo.masung.board.service;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.czo.masung.board.model.dto.BoardDTO;
+import com.czo.masung.board.model.dto.BoardFileDTO;
+import com.czo.masung.board.model.vo.BoardFileVO;
 import com.czo.masung.board.model.dto.CommentDTO;
 import com.czo.masung.board.model.vo.BoardVO;
+import com.czo.masung.board.repository.BoardFileRepository;
 import com.czo.masung.board.model.vo.CommentVO;
 import com.czo.masung.board.repository.BoardRepository;
 import com.czo.masung.page.CommentPageRequestDTO;
@@ -26,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardService {
 	private final MapperUtil mapperUtil;
 	private final BoardRepository boardRepository;
+	private final BoardFileRepository boardFileRepository;
 
 	public PageResponseDTO<BoardDTO> getList(PageRequestDTO pageRequestDTO) {
 		List<BoardDTO> list = boardRepository.getList(pageRequestDTO)
@@ -39,8 +47,17 @@ public class BoardService {
 
 	public BoardDTO getRead(int board_number) {
 		BoardVO board = boardRepository.getRead(board_number).orElse(null);
-
-		return board != null ? mapperUtil.map(board, BoardDTO.class) : null;
+		BoardDTO boardDTO = board != null ? mapperUtil.map(board, BoardDTO.class) : null;
+		if (boardDTO != null) {
+			boardDTO.setBoardFileDTOList(
+				boardFileRepository.getList(board_number)
+					.stream()
+					.map(boardFileVO -> mapperUtil.map(boardFileVO, BoardFileDTO.class))
+					.collect(Collectors.toList())
+			);
+		}
+		
+		return boardDTO;
 	}
 
 	public int remove(int board_number) {
@@ -52,7 +69,36 @@ public class BoardService {
 	}
 
 	public int register(final BoardVO newBoard) {
-		return boardRepository.register(newBoard);
+		final int result = boardRepository.register(newBoard);
+		try {
+			for (MultipartFile file : newBoard.getFile()) {
+		 		System.out.println(file.getSize());
+				if (file.getSize() != 0) {
+		 			//유일한 파일명 생성 
+		 			String filename = UUID.randomUUID().toString();
+		 			
+					//첨부파일 저장 
+					OutputStream os = new FileOutputStream("/Users/user/" + filename); 
+					file.getInputStream().transferTo(os);
+					os.close();
+					
+		 			BoardFileVO boardFileVO = new BoardFileVO();
+		 			
+		 			boardFileVO.setBoard_number((int)newBoard.getBoard_number());
+		 			boardFileVO.setFile_originalname(file.getOriginalFilename());
+		 			boardFileVO.setFile_realname(filename);
+		 			boardFileVO.setFile_content_type(file.getContentType());
+		 			boardFileVO.setFile_size((int)file.getSize());
+		 			
+		 			boardFileRepository.insert(boardFileVO);
+		 			System.out.println("파일 저장 성공");
+		 		}
+	 		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	public PageResponseDTO<BoardDTO> getTopGoodList(PageRequestDTO pageRequestDTO) {
@@ -81,6 +127,11 @@ public class BoardService {
 		boardRepository.saveViewCount(board);
 		
 		return board.getBoard_viewcnt();
+	}
+	
+	public BoardFileDTO getBoardFile(int file_number) {
+		BoardFileVO boardFile = boardFileRepository.getRead(file_number).orElse(null);
+		return boardFile != null ? mapperUtil.map(boardFile, BoardFileDTO.class) : null;
 	}
 
 	public CommentPageResponseDTO<CommentDTO> getComment(CommentPageRequestDTO commentPageRequestDTO) {

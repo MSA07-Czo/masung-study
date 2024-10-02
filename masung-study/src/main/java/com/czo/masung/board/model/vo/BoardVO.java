@@ -1,5 +1,10 @@
 package com.czo.masung.board.model.vo;
 
+
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +24,7 @@ public class BoardVO {
 	private int       parent_board_number;
 	private int       board_category_number;
 	private String    board_category_name;
+	private List<MultipartFile> file;
 
 	public BoardVO(String board_title) {
 		this.board_number = 0;

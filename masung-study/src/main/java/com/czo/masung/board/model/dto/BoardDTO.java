@@ -1,7 +1,11 @@
 package com.czo.masung.board.model.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +31,9 @@ public class BoardDTO {
 	private int       parent_board_number;
 	private int       board_category_number;
 	private String    board_category_name;
+	
+	private List<MultipartFile> file;
+	private List<BoardFileDTO> boardFileDTOList;
 
 	public BoardDTO(String board_title) {
 		this.board_number = 0;

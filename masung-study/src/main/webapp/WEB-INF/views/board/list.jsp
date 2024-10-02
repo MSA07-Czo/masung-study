@@ -54,7 +54,6 @@
 
 						<div class="card-body">
 							<h5 id="boardListTotal" class="card-title"></h5>
-
 							<div class="mb-3">
 								<select name="size" id="size"
 									onchange="updatePageSize(this.value)">
@@ -98,6 +97,7 @@
 	</template>
 
 	<a href="register">등록</a>
+
 	<script>
 const searchForm = document.getElementById("searchForm");
 

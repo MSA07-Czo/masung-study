@@ -1,5 +1,10 @@
 package com.czo.masung.board.controller;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -8,11 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.czo.masung.board.model.dto.BoardDTO;
+import com.czo.masung.board.model.dto.BoardFileDTO;
 import com.czo.masung.board.model.vo.BoardVO;
 import com.czo.masung.board.service.BoardService;
 import com.czo.masung.page.PageRequestDTO;
@@ -116,5 +123,28 @@ public class BoardController {
 		boardService.modify(mapperUtil.map(board, BoardVO.class));
 
 		return "redirect:/board/read?board_number=" + board.getBoard_number() + "&" + pageRequestDTO.getLink();
+	}
+	
+	@GetMapping(value="/board/download/{file_number}")
+	public void download(@PathVariable("file_number") int file_number, HttpServletResponse response) throws Exception {
+	//public void download(int file_id, HttpServletResponse response) {
+		log.info("file_number = " + file_number);
+		BoardFileDTO boardFileDTO = boardService.getBoardFile(file_number);
+		if (boardFileDTO == null) {
+			response.setStatus(404);
+		} else {
+			String file_originalname = boardFileDTO.getFile_originalname();
+			file_originalname = URLEncoder.encode(file_originalname, "utf-8");			
+			
+			response.setContentLength(boardFileDTO.getFile_size());
+			response.setContentType(boardFileDTO.getFile_content_type());
+			response.setHeader("Cache-Control", "no-cache");
+			response.setHeader("Content-disposition", "attachment; fileName=" + file_originalname);
+			
+			InputStream in = new FileInputStream("/Users/user/" + boardFileDTO.getFile_realname());
+			in.transferTo(response.getOutputStream());
+			in.close();
+			
+		}
 	}
 }
