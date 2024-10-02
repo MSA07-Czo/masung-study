@@ -150,7 +150,7 @@ function updateBoardList(data) {
             
             clone.querySelector('.board-number').textContent = board.board_number;
             clone.querySelector('.board-title').textContent = board.board_title;
-            clone.querySelector('.board-title').href = `read?board_number=${board.board_number}`;
+            clone.querySelector('.board-title').href = "read?board_number=" + board.board_number;
             clone.querySelector('.board-writer').textContent = board.user_name;
             clone.querySelector('.board-date').textContent = board.board_reg_date;
             clone.querySelector('.board-viewcount').textContent = board.board_viewcnt;
