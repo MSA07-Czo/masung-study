@@ -87,7 +87,6 @@ function updatePage(data) {
     		 
     		 clone.querySelector('.page-list').textContent = i;
              clone.querySelector('.page-list').dataset.param = getParam(i, data.pageRequest);
-             clone.querySelector('.page-list').classList.add(data.pageResponse.page == i ? 'active' : '');
 
              pageList.appendChild(clone);
          }
