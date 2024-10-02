@@ -120,5 +120,21 @@
 			 board_viewcnt    = #{board_viewcnt}
 		where board_number = #{board_number}
 	</update>
+	
+	<!-- 댓글 CRUD -->
+	<select id="getComment" resultType="com.czo.masung.board.model.vo.CommentVO">
+		SELECT 
+			c.*,
+			u.user_name
+		FROM Comments c INNER JOIN Users u ON c.user_id = u.user_id
+		where board_number = #{board_number}
+		order by comment_number
+		limit #{skip}, #{size}
+	</select>
+	
+	<select id="getCommentTotalCount" resultType="int">
+		SELECT count(*) FROM Comments 
+		where board_number = #{board_number}
+	</select>
 
 </mapper>	

@@ -7,6 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<style type="text/css">
+		.page-list.active {
+			font-weight: bold;
+			color: #007bff;
+		}
+	</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/header.jsp"></jsp:include>
@@ -47,7 +53,7 @@
 						</div>
 
 						<div class="card-body">
-							<h5 id="boardListTotal" class="card-title">${pageResponseDTO.total}개의글</h5>
+							<h5 id="boardListTotal" class="card-title"></h5>
 
 							<div class="mb-3">
 								<select name="size" id="size"
@@ -77,17 +83,6 @@
 			</tr>
 		</thead>
 		<tbody id="boardList">
-			<c:forEach var="board" items="${pageResponseDTO.list}">
-				<tr>
-					<td>${board.board_number}</td>
-					<td><a
-						href="read?board_number=${board.board_number}&${pageRequestDTO.link}">
-							<c:if test="${board.parent_board_number != 0}">ㄴ</c:if>${board.board_title}</a></td>
-					<td>${board.user_name}</td>
-					<td>${board.board_reg_date}</td>
-					<td>${board.board_viewcnt}</td>
-				</tr>
-			</c:forEach>
 		</tbody>
 	</table>
 	<jsp:include page="/WEB-INF/views/inc/page_nav.jsp"></jsp:include>
@@ -103,7 +98,7 @@
 	</template>
 
 	<a href="register">등록</a>
-<script>
+	<script>
 const searchForm = document.getElementById("searchForm");
 
 function performSearch(){
@@ -130,6 +125,7 @@ function updatePageSize(size) {
         .then(response => response.json())
         .then(data => {
             updateBoardList(data.pageResponse);
+            fetchPageData(getParam(1, data.pageRequest));
         })
         .catch(error => {
             console.error("비동기 처리 도중 오류 발생:", error);
