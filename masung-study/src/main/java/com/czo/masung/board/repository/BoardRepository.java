@@ -3,9 +3,12 @@ package com.czo.masung.board.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.czo.masung.board.model.vo.BoardVO;
+import com.czo.masung.board.model.vo.CommentVO;
+import com.czo.masung.page.CommentPageRequestDTO;
 import com.czo.masung.page.PageRequestDTO;
 
 @Repository
@@ -21,4 +24,7 @@ public interface BoardRepository {
 	int modify(BoardVO board);
 	int register(BoardVO board);
 	int saveViewCount(BoardVO board);
+	//댓글 CRUD
+	List<CommentVO> getComment(CommentPageRequestDTO commentPageRequestDTO);
+	int getCommentTotalCount(CommentPageRequestDTO commentPageRequestDTO);
 }

@@ -48,7 +48,7 @@ public class BoardController {
 
 		model.addAttribute("pageResponseDTO", pageResponseDTO);
 		model.addAttribute("pageRequestDTO", pageRequestDTO);
-
+		
 		return "/board/list";
 	}
 

@@ -1,5 +1,6 @@
 package com.czo.masung.board.model.vo;
 
+
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -18,8 +19,8 @@ public class BoardVO {
 	private String    board_title;
 	private String    board_content;
 	private int       board_viewcnt;
-	private String 	  board_reg_date;
-	private String 	  board_last_updated;
+	private String    board_reg_date;
+	private String    board_last_updated;
 	private int       parent_board_number;
 	private int       board_category_number;
 	private String    board_category_name;

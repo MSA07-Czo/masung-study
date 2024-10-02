@@ -33,7 +33,9 @@
 				</select>
 			</h3>
 		</div>
-
+		
+		<input type="hidden" name="board_number" value="${board.board_number}"/>
+		<input type="hidden" name="board_viewcnt" value="${board.board_viewcnt}"/>
 		<input type="submit" value="수정">
 	</form>
 

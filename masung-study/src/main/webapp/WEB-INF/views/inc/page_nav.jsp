@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <table class="table">
-	<tbody id="pageList"> 
+	<tbody id="pageList">
+
 	</tbody>
 </table>
 
@@ -87,6 +88,10 @@ function updatePage(data) {
     		 
     		 clone.querySelector('.page-list').textContent = i;
              clone.querySelector('.page-list').dataset.param = getParam(i, data.pageRequest);
+
+             if (data.pageResponse.page == i) {
+            	    clone.querySelector('.page-list').classList.add('active');
+            }
 
              pageList.appendChild(clone);
          }

@@ -13,9 +13,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.czo.masung.board.model.dto.BoardDTO;
 import com.czo.masung.board.model.dto.BoardFileDTO;
 import com.czo.masung.board.model.vo.BoardFileVO;
+import com.czo.masung.board.model.dto.CommentDTO;
 import com.czo.masung.board.model.vo.BoardVO;
 import com.czo.masung.board.repository.BoardFileRepository;
+import com.czo.masung.board.model.vo.CommentVO;
 import com.czo.masung.board.repository.BoardRepository;
+import com.czo.masung.page.CommentPageRequestDTO;
+import com.czo.masung.page.CommentPageResponseDTO;
 import com.czo.masung.page.PageRequestDTO;
 import com.czo.masung.page.PageResponseDTO;
 import com.czo.masung.util.MapperUtil;
@@ -128,5 +132,15 @@ public class BoardService {
 	public BoardFileDTO getBoardFile(int file_number) {
 		BoardFileVO boardFile = boardFileRepository.getRead(file_number).orElse(null);
 		return boardFile != null ? mapperUtil.map(boardFile, BoardFileDTO.class) : null;
+	}
+
+	public CommentPageResponseDTO<CommentDTO> getComment(CommentPageRequestDTO commentPageRequestDTO) {
+		List<CommentDTO> list = boardRepository.getComment(commentPageRequestDTO)
+				.stream()
+				.map(commentVO -> mapperUtil
+						.map(commentVO, CommentDTO.class))
+				.collect(Collectors.toList());
+
+		return new CommentPageResponseDTO<CommentDTO>(commentPageRequestDTO, list, boardRepository.getCommentTotalCount(commentPageRequestDTO));
 	}
 }
