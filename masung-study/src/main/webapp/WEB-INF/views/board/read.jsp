@@ -28,6 +28,28 @@
 			<span>카테고리: </span> <span>${board.board_category_name}</span>
 		</h3>
 	</div>
+	
+	<div>
+		<c:if test="${not empty board.boardFileDTOList}">
+		<c:forEach var="boardFile" items="${board.boardFileDTOList}">
+			<div>
+				<h3>
+					<span>첨부파일: </span>
+					<span><a href="download/${boardFile.file_number}">${boardFile.file_originalname}</a></span>
+				</h3>
+			</div>
+		</c:forEach>
+		
+		<c:forEach var="boardFile" items="${board.boardFileDTOList}">
+			<div>
+				<h3>
+					<img src="download/${boardFile.file_number}" />
+				</h3>
+			</div>
+		</c:forEach>
+		</c:if>
+	</div>
+	
 	<div>
 		<span>내용: </span> <span>${board.board_content}</span>
 	</div>

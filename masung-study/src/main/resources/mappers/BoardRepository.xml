@@ -3,13 +3,42 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.czo.masung.board.repository.BoardRepository">
+	<sql id="search">
+	    <where>
+	        <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'title'">
+	                    board_title LIKE concat('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'writer'">
+	                    u.user_name LIKE concat('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'both'">
+	                    (board_title LIKE concat('%', #{keyword}, '%')
+	                    OR u.user_name LIKE concat('%', #{keyword}, '%'))
+	                </when>
+	            </choose>
+	        </if>
+	
+	        <if test="from != null and from != ''">
+	            <![CDATA[
+	            AND board_reg_date >= STR_TO_DATE(#{from}, '%Y-%m-%d')
+	            ]]>
+	        </if>
+	        <if test="to != null and to != ''">
+	            <![CDATA[
+	            AND board_reg_date <= DATE_ADD(STR_TO_DATE(#{to}, '%Y-%m-%d'), INTERVAL 1 DAY)
+	            ]]>
+	        </if>
+	    </where>
+	</sql>
 	
 	<select id="getList" resultType="com.czo.masung.board.model.vo.BoardVO">
 		SELECT 
 			b.*,
 			u.user_name 
 		FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
-		<!-- <include refid="search"/>    검색 구현중  -->
+		<include refid="search"/>
 		order by board_number desc
 		limit #{skip}, #{size}
 	</select>
@@ -38,6 +67,7 @@
 
 	<select id="getTotalCount" resultType="int">
 		SELECT count(*) FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
+		<include refid="search"/>
 	</select>	
 
 	<select id="getRead" resultType="com.czo.masung.board.model.vo.BoardVO">
@@ -51,7 +81,7 @@
 	INNER JOIN 
 	    Users u ON b.user_id = u.user_id
 	LEFT JOIN 
-	    board_category bc ON b.board_category_number = bc.board_category_number
+	    Board_Category bc ON b.board_category_number = bc.board_category_number
 	WHERE 
 	    b.board_number = #{board_number}
 	</select>	

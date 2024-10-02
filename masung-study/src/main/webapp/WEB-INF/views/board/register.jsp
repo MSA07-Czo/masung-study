@@ -11,7 +11,7 @@
 	<jsp:include page="/WEB-INF/views/inc/header.jsp"></jsp:include>
 
 	<div class="card-body">
-		<form action="register" method="post" onsubmit="return validateForm()">
+		<form action="register" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 			<div class="input-group mb-3">
 				<span class="input-group-text">제목</span> <input name="board_title"
 					id="board_title" class="form-control">
@@ -31,6 +31,11 @@
 					<option value="99">ETC</option>
 				</select>
 			</h3>
+			
+			<div class="input-group mb-3">
+				<span class="input-group-text">첨부파일</span>
+				<input type="file" id="file" name="file"><br />
+			</div>
 
 			<input type="hidden" name="parent_board_number"
 				value="${parent_board_number != null ? parent_board_number : 0}">

@@ -45,8 +45,13 @@ public class UserController {
 	@GetMapping("list")
 	public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("loginInfo") == null) {
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginInfo");
+		if (loginUser == null) {
 			return "/user/login";
+		}
+		
+		if (!loginUser.getUser_role().equals("admin")) {
+			return "/user/AccessDenied";
 		}
 		
 		if (bindingResult.hasErrors()) {
@@ -77,11 +82,17 @@ public class UserController {
 	@RequestMapping(value="read", method = RequestMethod.GET)
 	public String read(String uid, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("loginInfo") == null) {
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginInfo");
+		if (loginUser == null) {
 			return "/user/login";
 		}
 		
+		if (!loginUser.getUser_id().equals(uid) && !loginUser.getUser_role().equals("admin")) {
+			return "/user/AccessDenied";
+		}
+		
 		model.addAttribute("user", userService.getRead(uid));
+		model.addAttribute("loginInfo", loginUser);
 		
 		return "/user/mypage";
 	}
@@ -97,8 +108,15 @@ public class UserController {
 	@RequestMapping(value="modify", method = RequestMethod.GET)
 	public String modifyForm(String uid, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("loginInfo") == null) {
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginInfo");
+		if (loginUser == null) {
 			return "/user/login";
+		}
+		System.out.println(loginUser.getUser_id());
+		System.out.println(uid);
+		
+		if (!loginUser.getUser_id().equals(uid) && !loginUser.getUser_role().equals("admin")) {
+			return "/user/AccessDenied";
 		}
 		
 		model.addAttribute("user", userService.getRead(uid));
@@ -108,7 +126,7 @@ public class UserController {
 	
 	@RequestMapping(value="modify", method = RequestMethod.POST)
 	public String modify(UserDTO user) {
-		
+		System.out.println(user);
 		userService.modify(mapperUtil.map(user, UserVO.class));
 		
 		return "redirect:read?uid=" + user.getUser_id();
@@ -141,8 +159,8 @@ public class UserController {
 	
 	@RequestMapping(value="login", method = RequestMethod.POST)
 	public String login(UserDTO inUser, HttpServletRequest request, HttpServletResponse response) {
-		
 		HttpSession session = request.getSession();
+		
 		UserDTO user = userService.login(inUser);
 		if (user != null) { 
 			user.setUser_recent_login(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -161,7 +179,14 @@ public class UserController {
 			System.out.println("로그인 성공");
 			System.out.println(user);
 			System.out.println("loginInfo :" + session.getAttribute("loginInfo"));
-			return "redirect:/";
+			
+			String referer = request.getHeader("Referer");
+			
+			System.out.println(referer);
+		    if(referer.contains("/user/login")) {
+		    	return "redirect:/";
+		    }
+			return "redirect:" + referer;
 		} else {
 			return "redirect:/user/login?error=error";
 		}

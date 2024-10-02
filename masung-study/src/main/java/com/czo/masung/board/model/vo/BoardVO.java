@@ -1,6 +1,8 @@
 package com.czo.masung.board.model.vo;
 
-import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,11 +18,12 @@ public class BoardVO {
 	private String    board_title;
 	private String    board_content;
 	private int       board_viewcnt;
-	private LocalDate board_reg_date;
-	private LocalDate board_last_updated;
+	private String 	  board_reg_date;
+	private String 	  board_last_updated;
 	private int       parent_board_number;
 	private int       board_category_number;
 	private String    board_category_name;
+	private List<MultipartFile> file;
 
 	public BoardVO(String board_title) {
 		this.board_number = 0;

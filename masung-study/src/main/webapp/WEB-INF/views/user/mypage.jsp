@@ -81,12 +81,12 @@
             background-color: #f0f0f0;
         }
 
-        .gender-group {
+        .select-group {
             display: flex;
             justify-content: left;
         }
 
-        .gender-group button {
+        .select-group button {
             width: 30%;
             padding: 0.75rem;
             font-size: 1rem;
@@ -95,7 +95,7 @@
             transition: background-color 0.3s ease;
         }
 
-        .gender-group button.selected {
+        .select-group button.selected {
             background-color: #222;
             color: #fff;
         }
@@ -171,32 +171,39 @@
 
     <div class="form-group">
         <label>성별</label>
-        <div class="gender-group">
+        <div class="select-group">
             <button class="gender-button <c:if test='${user.user_gender == "M"}'>selected</c:if>">남성</button>
             <button class="gender-button <c:if test='${user.user_gender == "F"}'>selected</c:if>">여성</button>
         </div>
     </div>
     
-    <div class="form-group">
-        <label>직업</label>
-        <div class="gender-group">
-            <button class="gender-button <c:if test='${user.user_role == "student"}'>selected</c:if>">학생</button>
-            <button class="gender-button <c:if test='${user.user_role == "teacher"}'>selected</c:if>">교수</button>
-        </div>
-    </div>
+    <c:if test='${!user.user_role.equals("admin")}'>
+	    <div class="form-group">
+	        <label>직업</label>
+	        <div class="select-group">
+	            <button class="role-button <c:if test='${user.user_role == "student"}'>selected</c:if>">학생</button>
+	            <button class="role-button <c:if test='${user.user_role == "teacher"}'>selected</c:if>">교수</button>
+	        </div>
+	    </div>
+    </c:if>
     
     <div>
     	<hr style="border:solid 0.01px #dddddd">
     </div>
-
-    <div class="actions">
-        <button type="button" onclick="location.href='/user/modify?uid=${user.user_id}'">수정하기</button>
-    </div>
+	<c:if test='${!loginInfo.user_role.equals("admin")}'>
+	    <div class="actions">
+	        <button type="button" onclick="location.href='/user/modify?uid=${user.user_id}'">수정하기</button>
+	    </div>
+    </c:if>
     
     <div class="remove">
-    	<a href="/user/remove?uid=${user.user_id}">회원탈퇴</a>
+    	<a href="/user/remove?uid=${user.user_id}" onclick="return confirm('정말로 탈하시겠습니까?');">
+    		<c:if test='${!loginInfo.user_role.equals("admin")}'>회원탈퇴</c:if>
+    		<c:if test='${loginInfo.user_role.equals("admin")}'>회원삭제</c:if>
+    	</a>
     </div>
-
+	
+	
 </div>
 
 </body>

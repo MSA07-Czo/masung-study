@@ -28,41 +28,45 @@ public class PageRequestDTO {
 	private int size = 10; 
 
 	//검색 옵션
-	private String[] types;
-	private String keyword;
-	private String from;
-	private String to;
+	@Builder.Default
+    private String searchType = "title";
+    private String keyword;
+    private String from;
+    private String to;
 
-	public int getSkip() {
-		return (page - 1) * size;
-	}
+    public int getSkip() {
+        return (page - 1) * size;
+    }
 
-	public String getLink()  {
-		return getParam(this.page);
-	}
+    public String getLink() {
+        return getParam(this.page);
+    }
 
-	public String getParam(int page)  {
-		StringBuilder builder = new StringBuilder();
-		builder.append("page=" + page);
-		builder.append("&size=" + size);
+    public String getParam(int page) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("page=" + page);
+        builder.append("&size=" + size);
 
-		if (keyword != null && keyword.length() > 0) {
-			try {
-				builder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+        if (searchType != null && !searchType.isEmpty()) {
+            builder.append("&searchType=" + searchType);
+        }
 
-		if (from != null) {
-			builder.append("&from=" + from);
-		}
+        if (keyword != null && !keyword.isEmpty()) {
+            try {
+                builder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
+            } catch (Exception e) {
+                log.error("Error encoding keyword", e);
+            }
+        }
 
-		if (to != null) {
-			builder.append("&to=" + to);
-		}
+        if (from != null && !from.trim().isEmpty()) {
+            builder.append("&from=").append(from);
+        }
+        if (to != null && !to.trim().isEmpty()) {
+            builder.append("&to=").append(to);
+        }
 
-		log.info("getParam-> " + builder.toString());
-		return builder.toString();
-	}
+        log.info("getParam-> " + builder.toString());
+        return builder.toString();
+    }
 }
