@@ -176,6 +176,8 @@
 		    dropdownBtn.addEventListener("click", function (e) {
 	    	  e.stopPropagation();
 	    	  toggleDropdown();
+		    });
+	    }
     </script>
 
 </body>
