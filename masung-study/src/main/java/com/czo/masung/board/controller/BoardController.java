@@ -141,7 +141,7 @@ public class BoardController {
 			response.setHeader("Cache-Control", "no-cache");
 			response.setHeader("Content-disposition", "attachment; fileName=" + file_originalname);
 			
-			InputStream in = new FileInputStream("/Users/user/" + boardFileDTO.getFile_realname());
+			InputStream in = new FileInputStream("C:\\file_upload\\" + boardFileDTO.getFile_realname());
 			in.transferTo(response.getOutputStream());
 			in.close();
 			
