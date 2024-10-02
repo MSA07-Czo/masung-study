@@ -103,7 +103,7 @@
 	</template>
 
 	<a href="register">등록</a>
-	<script>
+<script>
 const searchForm = document.getElementById("searchForm");
 
 function performSearch(){
@@ -113,7 +113,8 @@ function performSearch(){
     fetch("/async/board/list?" + params)
         .then(response => response.json())
         .then(data => {
-            updateBoardList(data);
+            updateBoardList(data.pageResponse);
+            fetchPageData(getParam(1, data.pageRequest));
         })
         .catch(error => {
             console.error("비동기 처리 도중 오류발생:", error);
@@ -128,7 +129,7 @@ function updatePageSize(size) {
     fetch("/async/board/list?" + params.toString())
         .then(response => response.json())
         .then(data => {
-            updateBoardList(data);
+            updateBoardList(data.pageResponse);
         })
         .catch(error => {
             console.error("비동기 처리 도중 오류 발생:", error);
