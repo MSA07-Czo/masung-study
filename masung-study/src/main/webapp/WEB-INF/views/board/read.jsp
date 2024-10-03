@@ -506,8 +506,14 @@ function registerComment() {
     })
     .then(response => response.json())
     .then(data => {
-        initCommentPage();
-        document.getElementById("comment").value = "";
+    	if(data.status == "success"){
+    		initCommentPage();
+            document.getElementById("comment").value = "";
+    	} else if(data.status == "fail"){
+    		alert(data.message);
+    	} else {
+    		alert("오류가 발생했습니다.");
+    	}
     })
     .catch(error => {
         console.error("비동기 처리 도중 오류 발생:", error);
