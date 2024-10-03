@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<<<<<<< HEAD
-<div id="pageList" class="pagination-container">
-</div>
-=======
 <head>
 <style>
 /* Pagination table styling */
@@ -58,6 +54,9 @@
 </style>
 </head>
 
+<div id="pageList" class="pagination-container">
+</div>
+
 <table class="pagenavTable">
 	<tbody id="pageList">
 		<tr>
@@ -65,7 +64,6 @@
 		</tr>
 	</tbody>
 </table>
->>>>>>> branch 'development' of https://github.com/MSA07-Czo/masung-study.git
 
 <template id="pageTemplate">
 	<a href="#" data-param="" class="page-list"></a> <!-- Changed to inline element for horizontal layout -->

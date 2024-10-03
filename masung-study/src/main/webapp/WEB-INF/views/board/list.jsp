@@ -235,6 +235,34 @@
 			background-color: #222;
 			transition: 0.3 ease;
 		}
+		.pagination-container {
+		display: flex; /* 가로 배치 */
+		gap: 10px; /* 페이지들 간의 간격 설정 */
+		justify-content: center; /* 페이지 중앙 정렬 */
+		margin: 20px 0;
+	}
+
+	.page-list {
+		padding: 5px 10px; /* 비활성 페이지에도 패딩 적용 */
+		text-decoration: none; /* 밑줄 제거 */
+		color: #007bff; /* 기본 글자 색상 */
+		border: 1px solid #007bff; /* 테두리 추가 */
+		border-radius: 5px; /* 둥근 모서리 */
+		transition: background-color 0.3s ease, color 0.3s ease; /* 애니메이션 */
+	}
+
+	.page-list:hover {
+		background-color: #007bff; /* 호버 시 배경색 */
+		color: #ffffff; /* 호버 시 글자색 */
+	}
+
+	.page-list.active {
+		font-weight: bold;
+		color: #ffffff; /* 활성화 상태에서 글자색 */
+		background-color: #007bff; /* 활성화 상태에서 배경색 */
+		border-color: #0056b3; /* 활성화 상태에서 테두리 색상 */
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+	}
 	</style>
 </head>
 <body>
