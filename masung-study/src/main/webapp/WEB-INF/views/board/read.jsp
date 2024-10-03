@@ -128,41 +128,47 @@ body {
 }
 
 .btn {
-	padding: 10px 20px;
-	border-radius: 6px;
-	font-weight: 500;
-	transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none; /* 밑줄 제거 */
+    display: inline-block; /* 링크의 패딩과 마진을 제대로 적용하기 위해 */
 }
 
+/* 상세 버튼 스타일 */
 .btn-primary {
-	background-color: #0066cc;
-	color: white;
-	border: none;
+    background-color: #0066cc;
+    color: white;
+    border: none;
 }
 
 .btn-primary:hover {
-	background-color: #0052a3;
-	color: white;
+    background-color: #0052a3;
+    color: white;
+    text-decoration: none; /* 호버 시에도 밑줄 제거 */
 }
 
 .btn-danger {
-	background-color: #dc3545;
-	color: white;
-	border: none;
+    background-color: #dc3545;
+    color: white;
+    border: none;
 }
 
 .btn-danger:hover {
-	background-color: #bb2d3b;
+    background-color: #bb2d3b;
+    text-decoration: none;
 }
 
 .btn-secondary {
-	background-color: #6c757d;
-	color: white;
-	border: none;
+    background-color: #6c757d;
+    color: white;
+    border: none;
 }
 
 .btn-secondary:hover {
-	background-color: #5a6268;
+    background-color: #5a6268;
+    text-decoration: none;
 }
 
 #commentListTotal {
@@ -218,6 +224,106 @@ input[type="submit"], input[type="reset"] {
 	border-color: #0056b3; /* 활성화 상태에서 테두리 색상 */
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
 }
+.comment-container {
+    position: relative;
+    padding: 15px;
+    width: 100%;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.comment-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.comment-writer {
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+}
+
+.comment-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit-comment,
+.btn-delete-comment,
+.btn-save-edit,
+.btn-cancel-edit {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.btn-edit-comment {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.btn-delete-comment {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.btn-save-edit {
+    background-color: #0066cc;
+    color: white;
+}
+
+.btn-cancel-edit {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-edit-comment:hover {
+    background-color: #dee2e6;
+}
+
+.btn-delete-comment:hover {
+    background-color: #f5c2c7;
+}
+
+.comment-edit-form {
+    margin-top: 10px;
+}
+
+.edit-comment-textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    resize: vertical;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.comment-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
 </style>
 </head>
 <body>
@@ -268,7 +374,7 @@ input[type="submit"], input[type="reset"] {
 				<span>👎 싫어요</span> <span>0</span>
 			</div>
 		</div>
-		<div class="comment-header">
+		<div>
 			<span id="orderByRegDate">등록순/</span> <span id="orderByRecent">최신순</span>
 			<span id="refresh">새로고침</span> <span id="commentListTotal">댓글수:
 			</span>
@@ -310,12 +416,31 @@ input[type="submit"], input[type="reset"] {
 
 	<div id="board_number" data-bno="${board.board_number}"></div>
 	<template id="commentTemplate">
-		<tr>
-			<td><a href="/user/read?uid=" class="comment-writer"></a></td>
-			<td class="comment-content"></td>
-			<td class="comment-date"></td>
-		</tr>
-	</template>
+    <tr class="comment-row">
+        <td class="comment-container">
+            <div class="comment-header">
+                <div class="comment-info">
+                    <a href="/user/read?uid=" class="comment-writer"></a>
+                    <span class="comment-date"></span>
+                </div>
+                <div class="comment-actions">
+                    <button class="btn-edit-comment" style="display: none;">수정</button>
+                    <button class="btn-delete-comment" style="display: none;">삭제</button>
+                </div>
+            </div>
+            <div class="comment-body">
+                <div class="comment-content"></div>
+                <div class="comment-edit-form" style="display: none;">
+                    <textarea class="edit-comment-textarea"></textarea>
+                    <div class="edit-buttons">
+                        <button class="btn-save-edit">저장</button>
+                        <button class="btn-cancel-edit">취소</button>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</template>
 
 	<script>
 function confirmDelete() {
