@@ -136,5 +136,17 @@
 		SELECT count(*) FROM Comments 
 		where board_number = #{board_number}
 	</select>
+	
+	<insert id="registerComment" useGeneratedKeys="true" keyProperty="comment_number">
+		insert into Comments (
+			 board_number
+			,user_id
+			,comment_content
+		) values (
+			 #{board_number}
+			,#{user_id}
+			,#{comment_content}
+		)
+	</insert>
 
 </mapper>	

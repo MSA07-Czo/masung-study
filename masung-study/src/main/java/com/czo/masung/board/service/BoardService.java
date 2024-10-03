@@ -133,7 +133,7 @@ public class BoardService {
 		BoardFileVO boardFile = boardFileRepository.getRead(file_number).orElse(null);
 		return boardFile != null ? mapperUtil.map(boardFile, BoardFileDTO.class) : null;
 	}
-
+	//댓글 CRUD
 	public CommentPageResponseDTO<CommentDTO> getComment(CommentPageRequestDTO commentPageRequestDTO) {
 		List<CommentDTO> list = boardRepository.getComment(commentPageRequestDTO)
 				.stream()
@@ -142,5 +142,10 @@ public class BoardService {
 				.collect(Collectors.toList());
 
 		return new CommentPageResponseDTO<CommentDTO>(commentPageRequestDTO, list, boardRepository.getCommentTotalCount(commentPageRequestDTO));
+	}
+
+	public int registerComment(CommentVO comment) {
+		final int comment_number = boardRepository.registerComment(comment);
+		return comment_number;
 	}
 }

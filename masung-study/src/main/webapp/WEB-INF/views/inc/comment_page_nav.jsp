@@ -2,16 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<table class="table">
-	<tbody id="pageList">
-
-	</tbody>
-</table>
+<div id="pageList" class="pagination-container">
+</div>
 
 <template id="pageTemplate">
-	<tr>
-		<td><a href="#" data-param="" class="page-list"></a></td>
-	</tr>
+	<a href="#" data-param="" class="page-list">Page</a>
 </template>
 
 <script>
@@ -89,7 +84,7 @@ function updatePage(data) {
              pageList.appendChild(clone);
     	 }
     } else {
-    	pageList.innerHTML = "<tr><td>검색 결과가 없습니다.</td></tr>";
+    	pageList.innerHTML = "<div>검색 결과가 없습니다.</div>";
     }
 }
 
