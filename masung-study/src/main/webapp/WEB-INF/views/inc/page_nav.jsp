@@ -54,6 +54,9 @@
 </style>
 </head>
 
+<div id="pageList" class="pagination-container">
+</div>
+
 <table class="pagenavTable">
 	<tbody id="pageList">
 		<tr>
@@ -156,7 +159,7 @@ function updatePage(data) {
              pageList.appendChild(clone);
     	 }
     } else {
-    	pageList.innerHTML = "<tr><td>검색 결과가 없습니다.</td></tr>";
+    	pageList.innerHTML = "<div>검색 결과가 없습니다.</div>";
     }
 }
 fetchPageData("page=1");
