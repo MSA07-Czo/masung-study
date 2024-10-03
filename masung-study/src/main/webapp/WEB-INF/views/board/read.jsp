@@ -70,6 +70,7 @@
 		<tbody id="commentList">
 		</tbody>
 	</table>
+	<jsp:include page="/WEB-INF/views/inc/comment_page_nav.jsp"></jsp:include>
 	
 	<template id="commentTemplate">
 		<tr>
@@ -107,7 +108,7 @@ function getComment(){
     .then(response => response.json())
     .then(data => {
     	updateCommentList(data);
-       
+        fetchPageData(getParam(1, data.commentPageRequest));
     })
     .catch(error => {
         console.error("비동기 처리 도중 오류발생:", error);
@@ -127,7 +128,7 @@ function updateCommentList(data){
             const clone = template.content.cloneNode(true);
             
             clone.querySelector('.comment-writer').textContent = comment.user_name;
-            clone.querySelector('.comment-writer').href = "/user/mypage?user_id=" + comment.user_id;
+            clone.querySelector('.comment-writer').href = "/user/read?uid=" + comment.user_id;
             clone.querySelector('.comment-content').textContent = comment.comment_content;
             clone.querySelector('.comment-date').textContent = comment.comment_reg_date;
 
@@ -137,7 +138,6 @@ function updateCommentList(data){
     	commentList.innerHTML = "<tr><td>검색 결과가 없습니다.</td></tr>";
     }
 }
-getComment();
 </script>
 </body>
 </html>
