@@ -26,12 +26,17 @@
             background-color: #222222;
             color: white;
         }
+        
+        header nav {
+        	margin-right: 2rem
+        }
 
         header .logo a{
             font-size: 1.5rem;
             font-weight: bold;
             text-decoration: none;
             color: white;
+            margin-left: 2rem;
         }
 
         header nav a {
@@ -120,9 +125,9 @@
 </head>
 <body>
 
-    <header>
+    <header id="header">
         <div class="logo">
-        	<a href="/">HOME</a>
+        	<a href="/">마성</a>
         </div>
         <nav class="user-info">
             <c:if test="${loginInfo == null}">

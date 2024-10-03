@@ -5,77 +5,126 @@
 <html>
 <head>
 <title>게시물 보기</title>
-<style type="text/css">
-.pagination-container {
-	display: flex; /* 가로 배치 */
-	gap: 10px; /* 페이지들 간의 간격 설정 */
-	justify-content: center; /* 페이지 중앙 정렬 */
-	margin: 20px 0;
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333333; /* Dark text for good readability */
+    margin: 0;
+    padding: 20px;
 }
 
-.page-list {
-	padding: 5px 10px; /* 비활성 페이지에도 패딩 적용 */
-	text-decoration: none; /* 밑줄 제거 */
-	color: #007bff; /* 기본 글자 색상 */
-	border: 1px solid #007bff; /* 테두리 추가 */
-	border-radius: 5px; /* 둥근 모서리 */
-	transition: background-color 0.3s ease, color 0.3s ease; /* 애니메이션 */
+.container {
+    max-width: 800px; /* Limit width for better readability */
+    margin: 0 auto; /* Center container */
+    padding: 20px;
 }
 
-.page-list:hover {
-	background-color: #007bff; /* 호버 시 배경색 */
-	color: #ffffff; /* 호버 시 글자색 */
+h1, h4, h5, h3 {
+    margin: 0;
+    padding: 10px 0;
+    font-weight: normal;
 }
 
-.page-list.active {
-	font-weight: bold;
-	color: #ffffff; /* 활성화 상태에서 글자색 */
-	background-color: #007bff; /* 활성화 상태에서 배경색 */
-	border-color: #0056b3; /* 활성화 상태에서 테두리 색상 */
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+.card-body {
+    background-color: #ffffff; /* White background for the card */
+    border: 1px solid #e0e0e0; /* Light gray border */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    padding: 20px;
 }
 
-.comment-section {
-	width: 100%;
-	max-width: 600px;
-	margin: 20px auto;
-	padding: 20px;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	background-color: #f9f9f9;
+a {
+    color: #000000; /* Black text for links */
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
-.form-group {
-	margin-bottom: 15px;
+a:hover {
+    color: #007bff; /* Change color on hover for links */
+    text-decoration: underline;
 }
 
-textarea {
-	width: 100%;
-	padding: 10px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-	font-size: 14px;
-	resize: none;
+.commentTable {
+    width: 100%;
+    border-collapse: collapse; /* Remove space between table cells */
+    margin-top: 20px;
 }
 
-textarea:focus {
-	outline: none;
-	border-color: #007bff;
-	box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+.commentTable td {
+    border: 1px solid #e0e0e0; /* Light gray border for table cells */
+    padding: 10px;
 }
 
-.submit-btn {
-	padding: 10px 20px;
-	background-color: #007bff;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
+.mt-3 {
+    margin-top: 1rem;
 }
 
-.submit-btn:hover {
-	background-color: #0056b3;
+.btn {
+    padding: 10px 15px;
+    border: 1px solid #333333; /* Dark border for buttons */
+    border-radius: 5px;
+    background-color: transparent; /* Transparent background */
+    color: #333333; /* Dark text color */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-right: 10px; /* Space between buttons */
+}
+
+.btn-primary {
+    background-color: #ffffff; /* White background for primary button */
+}
+
+.btn-primary:hover {
+    background-color: #f8f9fa; /* Light gray on hover */
+    color: #000000; /* Dark text on hover */
+}
+
+.btn-danger {
+    background-color: #ffffff; /* White background for danger button */
+}
+
+.btn-danger:hover {
+    background-color: #f8d7da; /* Light red on hover */
+    color: #000000; /* Dark text on hover */
+}
+
+.btn-secondary {
+    background-color: #ffffff; /* White background for secondary button */
+}
+
+.btn-secondary:hover {
+    background-color: #e2e3e5; /* Slightly darker gray on hover */
+    color: #000000; /* Dark text on hover */
+}
+
+#commentListTotal {
+    font-weight: bold; /* Bold font for comment count */
+}
+
+/* Additional styles for better alignment */
+h1, h3, h4, h5 {
+    text-align: left; /* Left align headings */
+}
+
+.card-body div {
+    margin-bottom: 15px; /* Space between elements in the card body */
+}
+
+input[type="text"],
+input[type="file"],
+textarea,
+select {
+    width: 100%; /* Full width for form controls */
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px; /* Rounded corners */
+    margin-top: 5px; /* Space above inputs */
+}
+
+input[type="submit"],
+input[type="reset"] {
+    width: auto; /* Auto width for buttons */
 }
 </style>
 </head>
@@ -247,6 +296,7 @@ function registerComment() {
     .then(data => {
         alert(data.message);
         initCommentPage();
+        document.getElementById("comment").value = "";
     })
     .catch(error => {
         console.error("비동기 처리 도중 오류 발생:", error);
