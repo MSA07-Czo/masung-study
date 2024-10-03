@@ -2,16 +2,68 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<table class="table">
-	<tbody id="pageList">
+<head>
+<style>
+/* Pagination table styling */
+.pagenavTable {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #f4f4f4;
+    border: none;
+    overflow: hidden;
+}
 
+/* Pagination list */
+#pageList {
+    text-align: center;
+    padding: 15px 0;
+    margin: 0;
+}
+
+/* Pagination links */
+.page-list {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    
+    color: #222;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.page-list:hover {
+    background-color: #666;
+    color: #f4f4f4;
+}
+
+/* Active page style */
+.page-list.active {
+    background-color: #222;
+    color: #fff;
+    cursor: default;
+}
+
+/* 'Previous' and 'Next' buttons */
+.page-list[data-param*="prev"], .page-list[data-param*="next"] {
+    font-weight: bold;
+    font-style: italic;
+}
+</style>
+</head>
+
+<table class="pagenavTable">
+	<tbody id="pageList">
+		<tr>
+			<td id="paginationContainer"></td> <!-- This will contain all the pagination buttons in a single row -->
+		</tr>
 	</tbody>
 </table>
 
 <template id="pageTemplate">
-	<tr>
-		<td><a href="#" data-param="" class="page-list"></a></td>
-	</tr>
+	<a href="#" data-param="" class="page-list"></a> <!-- Changed to inline element for horizontal layout -->
 </template>
 
 <script>

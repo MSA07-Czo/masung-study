@@ -12,6 +12,229 @@
 			font-weight: bold;
 			color: #007bff;
 		}
+		
+		/* General body styling */
+		body {
+		    font-family: 'Roboto', sans-serif;
+		    margin: 0;
+		    padding: 0;
+		    background-color: #f4f4f9;
+		    color: #333;
+		    font-size: 16px;
+		}
+		
+		/* Header Styling */
+		header {
+		    background-color: #333;
+		    color: #fff;
+		    padding: 20px;
+		    text-align: center;
+		    font-size: 24px;
+		}
+		
+		/* Title styling */
+		h1 {
+		    text-align: center;
+		    margin-top: 20px;
+		    font-size: 2rem;
+		    font-weight: bold;
+		    color: #333;
+		}
+		
+		/* Form Card Styling */
+		.card {
+		    margin: 20px auto;
+		    background-color: white;
+		    padding: 1rem 2rem;
+		    border-radius: 10px;
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for modern feel */
+		    max-width: 700px;
+		    width: 100%;
+		}
+		
+		h3.card-title {
+	        text-align: left;
+	        font-weight: bold;
+	        margin-bottom: 1rem;
+	    }
+		
+		/* Form Styling */
+		form {
+		    display: flex;
+		    flex-direction: column;
+		    gap: 1rem;
+		}
+		
+		.form-select {
+		    flex-grow: 1;
+		    max-width: 10%;
+		    margin-bottom: 1rem;
+		    
+		}
+		
+		.form-control {
+			height: 2rem;
+			font-size: 0.9rem;
+		}
+		
+		input[type="text"], input[type="date"], select {
+		    width: 100%;
+		    padding: 10px;
+		    border: 1px solid #ddd;
+		    border-radius: 5px;
+		    box-sizing: border-box;
+		}
+		
+		button {
+		    padding: 10px 20px;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    font-weight: bold;
+		    transition: background-color 0.3s ease;
+		}
+		
+		/* Primary button styling */
+		.btn-primary {
+		    background-color: #333;
+		    color: white;
+		}
+		
+		.btn-primary:hover {
+		    background-color: #555;
+		}
+		
+		/* Info button styling */
+		.btn-info {
+		    background-color: #666;
+		    color: white;
+		}
+		
+		.btn-info:hover {
+		    background-color: #888;
+		}
+		
+		/* Search box button group */
+		.input-group {
+		    display: flex;
+		    gap: 10px;
+		}
+		
+		/* Responsive table styling */
+		.table {
+		    width: 80%;
+		    margin: 20px auto;
+		    border-collapse: collapse;
+		    background-color: #fff;
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		    border-radius: 10px;
+		    overflow: hidden;
+		}
+		
+		/* Table headers */
+		.table thead th {
+		    background-color: #f5f5f5;
+		    color: #222;
+		    font-weight: bold;
+		    padding: 10px;
+		    text-align: center;
+		}
+		
+		/* Table cells */
+		.table tbody td {
+		    padding: 12px;
+		    text-align: center;
+		    border-bottom: 1px solid #ddd;
+		    color: #333;
+		}
+		
+		/* Row hover effect */
+		.table tbody tr:hover {
+		    background-color: #f2f2f2;
+		}
+		
+		/* Template table row styling */
+		.table tbody tr:last-child td {
+		    border-bottom: none;
+		}
+		
+		/* Pagination links */
+		.pagination {
+		    display: flex;
+		    justify-content: center;
+		    margin-top: 20px;
+		}
+		
+		.pagination a {
+		    margin: 0 5px;
+		    padding: 10px 15px;
+		    background-color: #333;
+		    color: white;
+		    border-radius: 5px;
+		    text-decoration: none;
+		    transition: background-color 0.3s ease;
+		}
+		
+		.pagination a:hover {
+		    background-color: #555;
+		}
+		
+		/* Additional board info styling */
+		#boardListTotal {
+		    font-size: 1rem;
+		    text-align: right;
+		    font-weight: 100;
+		    margin: 1rem;
+		    font-color: #666;
+		}
+		
+		/* Responsive layout for smaller screens */
+		@media (max-width: 768px) {
+		    .card {
+		        width: 90%;
+		    }
+		
+		    .table {
+		        width: 100%;
+		    }
+		}
+		
+		#size {
+			display: inline;
+			width: 10%;
+			
+		}
+		
+		div > span {
+			font-size: 0.8rem;
+			color: #777;
+			font-weight: 400;
+			position: relative;
+			top: 4px;
+		}
+ 		
+		.register {
+			display: block;
+		}
+		
+		p > a {
+			font-size: 1rem;
+			margin-left: 83.5%;
+			margin-bottom: 10rem;
+			text-decoration: none;
+			color: #555;
+			font-weight: 600;
+			border: solid 0.9px;
+			border-color: #555;
+			border-radius: 15px;
+			padding: 0.5rem 1rem;
+		}
+		
+		p > a:hover {
+			color: white;
+			background-color: #222;
+			transition: 0.3 ease;
+		}
 	</style>
 </head>
 <body>
@@ -40,8 +263,10 @@
 						</div>
 
 						<div class="input-group mb-3 dueDateDiv">
+							<span>FROM</span>
 							<input type="date" name="from" class="form-control"
 								value="${not empty pageRequestDTO.from ? pageRequestDTO.from : ''}">
+							<span>TO</span>
 							<input type="date" name="to" class="form-control"
 								value="${not empty pageRequestDTO.to ? pageRequestDTO.to : ''}">
 						</div>
@@ -53,7 +278,6 @@
 						</div>
 
 						<div class="card-body">
-							<h5 id="boardListTotal" class="card-title"></h5>
 							<div class="mb-3">
 								<select name="size" id="size"
 									onchange="updatePageSize(this.value)">
@@ -63,6 +287,8 @@
 									</c:forTokens>
 								</select>
 							</div>
+							
+							<h5 id="boardListTotal" class="card-title"></h5>
 						</div>
 					</form>
 				</div>
@@ -71,6 +297,10 @@
 		</div>
 	</div>
 
+	<p class="register">
+		<a href="register">글쓰기</a>
+	</p>
+	
 	<table class="table">
 		<thead>
 			<tr>
@@ -95,8 +325,6 @@
 			<td class="board-viewcount"></td>
 		</tr>
 	</template>
-
-	<a href="register">등록</a>
 
 	<script>
 const searchForm = document.getElementById("searchForm");
@@ -137,7 +365,7 @@ function updateBoardList(data) {
     const boardList      = document.getElementById("boardList");
     const boardListTotal = document.getElementById("boardListTotal");
     
-    boardListTotal.textContent = data.total +"개의글";
+    boardListTotal.textContent = data.total + "개의 글";
     boardList.innerHTML = "";
     
     if (data.list && data.list.length > 0) {
