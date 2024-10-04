@@ -6,42 +6,11 @@
 	<sql id="search">
 		<where>
 			<if test="keyword != null and keyword.length > 0">
-				<!-- <foreach collection="types" item="type" open="(" close=")" separator=" or ">
-					<if test="type == 'title'">
-						title LIKE concat('%', #{keyword}, '%')
-					</if>
-					<if test="type == 'writer'">
-						m.name LIKE concat('%', #{keyword}, '%')
-					</if>
-				</foreach> -->
 				user_id LIKE concat('%', #{keyword}, '%')
 				OR user_name LIKE concat('%', #{keyword}, '%')
 				OR user_email LIKE concat('%', #{keyword}, '%')
 				OR user_phone LIKE concat('%', #{keyword}, '%')
 			</if>
-			
-			<!-- <if test="finished">
-				<trim prefix="and">
-					finished = 1
-				</trim>
-			</if> -->
-			<!-- <if test="from != null and to != null ">
-				<trim prefix="and">
-					dueDate between #{from} and #{to}
-				</trim>
-			</if> -->
-			<!-- <if test="from != null and to == null ">
-				<trim prefix="and">
-					dueDate >= #{from} 
-				</trim>
-			</if> -->
-			<!-- <if test="from == null and to != null ">
-				<trim prefix="and">
-					<![CDATA[
-					dueDate <= #{to}
-					]]>
-				</trim>
-			</if> -->
 		</where>	
 	</sql>
 

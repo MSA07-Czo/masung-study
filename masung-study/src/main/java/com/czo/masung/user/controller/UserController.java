@@ -228,7 +228,7 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="findPwd", method = RequestMethod.GET)
+	@RequestMapping(value="findPwd", method = RequestMethod.GET) 
 	public String findPwdGet() {
 		
 		return "/user/findPwd";
