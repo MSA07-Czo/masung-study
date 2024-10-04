@@ -267,7 +267,7 @@
                     <td>${user.user_name}</td>
                     <td>${user.user_email}</td>
                     <td>
-                        <form action="remove" method="post" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
+                        <form action="remove" method="get" onsubmit="return confirm('정말로 삭제하시겠습니까?');">
                             <input type="hidden" name="uid" value="${user.user_id}">
                             <button type="submit">삭제</button>
                         </form>
