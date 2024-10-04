@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czo.masung.board.repository.BoardRepository">
+	<sql id="search">
+	    <where>
+	        <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <when test="searchType == 'title'">
+	                    board_title LIKE concat('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'writer'">
+	                    u.user_name LIKE concat('%', #{keyword}, '%')
+	                </when>
+	                <when test="searchType == 'both'">
+	                    (board_title LIKE concat('%', #{keyword}, '%')
+	                    OR u.user_name LIKE concat('%', #{keyword}, '%'))
+	                </when>
+	            </choose>
+	        </if>
+	
+	        <if test="from != null and from != ''">
+	            <![CDATA[
+	            AND board_reg_date >= STR_TO_DATE(#{from}, '%Y-%m-%d')
+	            ]]>
+	        </if>
+	        <if test="to != null and to != ''">
+	            <![CDATA[
+	            AND board_reg_date <= DATE_ADD(STR_TO_DATE(#{to}, '%Y-%m-%d'), INTERVAL 1 DAY)
+	            ]]>
+	        </if>
+	    </where>
+	</sql>
+	
+	<select id="getList" resultType="com.czo.masung.board.model.vo.BoardVO">
+		SELECT 
+			b.*,
+			u.user_name 
+		FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
+		<include refid="search"/>
+		order by board_number desc
+		limit #{skip}, #{size}
+	</select>
+	
+	<select id="getTopGoodList" resultType="com.czo.masung.board.model.vo.BoardVO">
+		SELECT 
+        	b.*,
+        	u.user_name,
+        	COUNT(l.good_or_bad) AS like_count
+    	FROM Boards b
+    	INNER JOIN Users u ON b.user_id = u.user_id 
+    	LEFT JOIN Likes l ON b.board_number = l.board_number AND l.good_or_bad = 1  
+    	group by b.board_number, u.user_name 
+    	order by like_count desc, b.board_number desc
+    	LIMIT #{skip}, #{size}
+	</select>
+	
+	<select id="getTopViewList" resultType="com.czo.masung.board.model.vo.BoardVO">
+		SELECT 
+			b.*,
+			u.user_name 
+		FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
+		order by b.board_viewcnt desc, b.board_number desc
+		limit #{skip}, #{size}
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM Boards b INNER JOIN Users u ON b.user_id = u.user_id
+		<include refid="search"/>
+	</select>	
+
+	<select id="getRead" resultType="com.czo.masung.board.model.vo.BoardVO">
+
+		SELECT
+	    b.*,
+	    u.user_name,
+	    bc.board_category_name
+	FROM 
+	    Boards b
+	INNER JOIN 
+	    Users u ON b.user_id = u.user_id
+	LEFT JOIN 
+	    Board_Category bc ON b.board_category_number = bc.board_category_number
+	WHERE 
+	    b.board_number = #{board_number}
+	</select>	
+	
+	<delete id="remove" >
+		delete FROM Boards where board_number = #{board_number}
+	</delete>
+	
+	<update id="modify" parameterType="com.czo.masung.board.model.vo.BoardVO">
+		update Boards set 
+			  board_title    = #{board_title}
+			, board_content  = #{board_content}
+			, board_category_number = #{board_category_number}
+			, board_last_updated = NOW()
+		where board_number = #{board_number}
+	</update>
+	
+	<insert id="register" useGeneratedKeys="true" keyProperty="board_number">
+		insert into Boards (
+			 user_id
+			,board_title
+			,board_content
+			,parent_board_number
+			,board_category_number
+		) values (
+			 #{user_id}
+			,#{board_title}
+			,#{board_content}
+			,#{parent_board_number}
+			,#{board_category_number}
+		)
+	</insert>
+	
+	<update id="saveViewCount" parameterType="com.czo.masung.board.model.vo.BoardVO">
+		update Boards set 
+			 board_viewcnt    = #{board_viewcnt}
+		where board_number = #{board_number}
+	</update>
+	
+	<!-- 댓글 CRUD -->
+	<select id="getComment" resultType="com.czo.masung.board.model.vo.CommentVO">
+		SELECT 
+			c.*,
+			u.user_name
+		FROM Comments c INNER JOIN Users u ON c.user_id = u.user_id
+		where board_number = #{board_number}
+		order by comment_number
+		limit #{skip}, #{size}
+	</select>
+	
+	<select id="getCommentTotalCount" resultType="int">
+		SELECT count(*) FROM Comments 
+		where board_number = #{board_number}
+	</select>
+	
+	<insert id="registerComment" useGeneratedKeys="true" keyProperty="comment_number">
+		insert into Comments (
+			 board_number
+			,user_id
+			,comment_content
+		) values (
+			 #{board_number}
+			,#{user_id}
+			,#{comment_content}
+		)
+	</insert>
+
+</mapper>	

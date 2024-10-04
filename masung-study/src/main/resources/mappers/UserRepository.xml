@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czo.masung.user.repository.UserRepository">
+	<sql id="search">
+		<where>
+			<if test="keyword != null and keyword.length > 0">
+				user_id LIKE concat('%', #{keyword}, '%')
+				OR user_name LIKE concat('%', #{keyword}, '%')
+				OR user_email LIKE concat('%', #{keyword}, '%')
+				OR user_phone LIKE concat('%', #{keyword}, '%')
+			</if>
+		</where>	
+	</sql>
+
+	
+	<select id="getList" resultType="com.czo.masung.user.model.vo.UserVO">
+		SELECT 
+			* 
+		FROM Users
+		<include refid="search"/>
+		order by user_id
+		limit #{skip}, #{size}
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM Users
+		<include refid="search"/>
+	</select>
+
+            
+	<select id="getRead" resultType="com.czo.masung.user.model.vo.UserVO">
+		SELECT * FROM Users where user_id = #{user_id} 
+	</select>	
+	
+	<select id="getRead_uuid" resultType="com.czo.masung.user.model.vo.UserVO">
+		SELECT * FROM Users where user_uuid = #{user_uuid} 
+	</select>	
+
+
+	<delete id="remove" >
+		delete FROM Users where user_id = #{user_id}
+	</delete>
+
+	
+	<update id="modify" parameterType="com.czo.masung.user.model.vo.UserVO">
+		update Users set 
+			 user_pwd  = #{user_pwd}
+			,user_name = #{user_name} 
+			,user_email = #{user_email} 
+			,user_phone = #{user_phone} 
+			,user_birth_date = #{user_birth_date} 
+			,user_gender = #{user_gender}
+			,user_role = #{user_role}
+		where user_id = #{user_id}
+	</update>
+	
+	<update id="modify_uuid" parameterType="com.czo.masung.user.model.vo.UserVO">
+		update Users set 
+			 user_uuid = #{user_uuid} 
+		where user_id = #{user_id}
+	</update>
+	
+	<update id="modify_recentLogin" parameterType="com.czo.masung.user.model.vo.UserVO">
+		update Users
+		set user_recent_login  = #{user_recent_login}
+		where user_id = #{user_id}
+	</update>
+	
+	<update id="modify_recentLogout" parameterType="com.czo.masung.user.model.vo.UserVO">
+		update Users
+		set user_recent_logout  = #{user_recent_logout}
+		where user_id = #{user_id}
+	</update>
+	
+	<insert id="insert">
+		insert into Users (
+			user_id, user_pwd, user_name, user_email, user_phone, user_birth_date, user_gender, user_role
+		) values (
+			#{user_id}, #{user_pwd}, #{user_name}, #{user_email}, #{user_phone}, #{user_birth_date}, #{user_gender}, #{user_role}
+		)
+	</insert>
+	
+	<insert id="insert_loginHis">
+		insert into User_LoginHistories (
+			user_id, his_login_date
+		) values (
+			#{user_id}, #{user_recent_login}
+		)
+	</insert>
+	
+	<insert id="insert_logoutHis">
+		insert into User_LoginHistories (
+			user_id, his_logout_date
+		) values (
+			#{user_id}, #{user_recent_logout}
+		)
+	</insert>
+	
+	<select id="findId" resultType="java.lang.String">
+		SELECT user_id 
+		FROM Users
+		WHERE user_name = #{user_name}
+		AND user_email = #{user_email}
+		AND user_phone = #{user_phone}
+	</select>
+	
+	<select id="findPwd" resultType="java.lang.String">
+		SELECT user_pwd 
+		FROM Users
+		WHERE user_id = #{user_id}
+		AND user_name = #{user_name}
+		AND user_email = #{user_email}
+		AND user_phone = #{user_phone}
+		AND user_birth_date = #{user_birth_date}
+	</select>
+
+</mapper>	

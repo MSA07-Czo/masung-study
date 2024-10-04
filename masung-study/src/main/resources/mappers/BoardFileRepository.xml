@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czo.masung.board.repository.BoardFileRepository">
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="file_number">
+		insert into Board_Files (
+			 board_number
+			,file_originalname
+			,file_realname
+			,file_content_type
+			,file_size
+		) values (
+			 #{board_number}
+			,#{file_originalname}
+			,#{file_realname}
+			,#{file_content_type}
+			,#{file_size}
+		)
+	</insert>
+
+	<select id="getList" resultType="com.czo.masung.board.model.vo.BoardFileVO">
+		select * from Board_Files where board_number = #{board_number}
+	</select>
+	
+	<select id="getRead" resultType="com.czo.masung.board.model.vo.BoardFileVO">
+		SELECT * FROM Board_Files where file_number = #{file_number}
+	</select>	
+
+</mapper>	
