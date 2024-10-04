@@ -78,7 +78,7 @@ public class BoardService {
 		 			String filename = UUID.randomUUID().toString();
 		 			
 					//첨부파일 저장 
-					OutputStream os = new FileOutputStream("/Users/user/" + filename); 
+					OutputStream os = new FileOutputStream("C:\\upload\\" + filename); 
 					file.getInputStream().transferTo(os);
 					os.close();
 					
