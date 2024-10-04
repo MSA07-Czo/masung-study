@@ -67,9 +67,8 @@
 		
 		.form-select {
 		    flex-grow: 1;
-		    max-width: 10%;
+		    max-width: 17%;
 		    margin-bottom: 1rem;
-		    
 		}
 		
 		.form-control {
@@ -410,7 +409,7 @@ function updateBoardList(data) {
             boardList.appendChild(clone);
         });
     } else {
-        boardList.innerHTML = "<tr><td></td><td>검색 결과가 없습니다.</td></tr>";
+        boardList.innerHTML = "";
     }
 }
 
