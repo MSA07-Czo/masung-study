@@ -352,7 +352,10 @@
 			<td class="board-viewcount"></td>
 		</tr>
 	</template>
-
+	
+	<!-- 수정한 내용 -->
+	<div id="pageRequestDTO" data-param="${pageRequestDTO}"></div>
+	
 	<script>
 const searchForm = document.getElementById("searchForm");
 

@@ -124,6 +124,9 @@ function getParam(page, pageRequest){
 }
 
 function updatePage(data) {
+	<!-- 수정한 내용 -->
+    const pageRequest   = document.getElementById("pageRequestDTO").dataset.param;
+	
 	const template      = document.getElementById("pageTemplate");
     const pageList      = document.getElementById("pageList");
     
@@ -133,17 +136,17 @@ function updatePage(data) {
     	 if(data.pageResponse.prev){
     		 const clone = template.content.cloneNode(true);
     		 
-    		 clone.querySelector('.page-list').textContent = "이전";
-             clone.querySelector('.page-list').dataset.param = getParam(data.pageResponse.begin-1, data.pageRequest);
+    		 clone.querySelector('.page-list').textContent = "이전";								<!-- 수정한 내용 -->
+             clone.querySelector('.page-list').dataset.param = getParam(data.pageResponse.begin-1, pageRequest);
              
              pageList.appendChild(clone);
     	 }
     	 for(let i=data.pageResponse.begin;i<=data.pageResponse.end;i++){
     		 const clone = template.content.cloneNode(true);
     		 
-    		 clone.querySelector('.page-list').textContent = i;
-             clone.querySelector('.page-list').dataset.param = getParam(i, data.pageRequest);
-
+    		 clone.querySelector('.page-list').textContent = i;			<!-- 수정한 내용 -->
+             clone.querySelector('.page-list').dataset.param = getParam(i, pageRequest);
+             
              if (data.pageResponse.page == i) {
             	    clone.querySelector('.page-list').classList.add('active');
             }
@@ -153,9 +156,9 @@ function updatePage(data) {
     	 if(data.pageResponse.next){
     		 const clone = template.content.cloneNode(true);
     		 
-    		 clone.querySelector('.page-list').textContent = "다음";
-             clone.querySelector('.page-list').dataset.param = getParam(data.pageResponse.end+1, data.pageRequest);
-             
+    		 clone.querySelector('.page-list').textContent = "다음";								<!-- 수정한 내용 -->
+             clone.querySelector('.page-list').dataset.param = getParam(data.pageResponse.end+1, pageRequest);
+             alert(clone.querySelector('.page-list').dataset.param);
              pageList.appendChild(clone);
     	 }
     } else {
