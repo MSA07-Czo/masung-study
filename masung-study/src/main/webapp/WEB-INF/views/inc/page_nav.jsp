@@ -126,7 +126,7 @@ function getParam(page, pageRequest){
 function updatePage(data) {
 	<!-- 수정한 내용 -->
     const pageRequest   = document.getElementById("pageRequestDTO").dataset.param;
-	
+	alert(pageRequest);
 	const template      = document.getElementById("pageTemplate");
     const pageList      = document.getElementById("pageList");
     
