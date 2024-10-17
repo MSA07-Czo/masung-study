@@ -60,28 +60,29 @@
 <table class="pagenavTable">
 	<tbody id="pageList">
 		<tr>
-			<td id="paginationContainer"></td> <!-- This will contain all the pagination buttons in a single row -->
+			<td id="paginationContainer">
+				<a href="#" class="page-list prev" id="prev">이전</a>
+				<c:forEach var="no" begin="1" end="10">
+					<a href="#" class="page-list page-no"></a>
+				</c:forEach>
+				<a href="#" class="page-list next" id="next">다음</a>
+			</td> 
 		</tr>
 	</tbody>
 </table>
 
-<template id="pageTemplate">
-	<a href="#" data-param="" class="page-list"></a> <!-- Changed to inline element for horizontal layout -->
-</template>
-
 <script>
-document.getElementById('pageList').addEventListener('click', e => {
-	  if (e.target.classList.contains('page-list')) {
-	    e.preventDefault();
-	    e.stopPropagation();
+document.querySelectorAll('.page-list').forEach(page => page.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
 
-	    const params = e.target.getAttribute("data-param");
-	    fetchPageData(params);
-	  }
-});
+	const searchFormPage = document.querySelector("#searchForm > #page");
+	searchFormPage.value = page.dataset.pageNo;
+	fetchPageData(page.dataset.pageNo);
+}));
 
-function fetchPageData(params) {
-	  fetch("/async/board/list?" + params)
+function fetchPageData(pageNo) {
+	  fetch("/async/board/list?" + getParam(pageNo))
 	    .then(response => {
 	      if (!response.ok) {
 	        throw new Error("서버 응답 오류");
@@ -97,73 +98,50 @@ function fetchPageData(params) {
 	    });
 }
 
-function getParam(page, pageRequest){
-	const params = new URLSearchParams();
-	
-	params.append("page", page);
-    params.append("size", pageRequest.size);
-    
-    if (pageRequest.searchType) {
-        params.append("searchType", pageRequest.searchType);
-      }
-
-      if (pageRequest.keyword) {
-        params.append('keyword', pageRequest.keyword);
-      }
-
-      if (pageRequest.from && pageRequest.from.trim()) {
-        params.append('from', pageRequest.from.trim());
-      }
-
-      if (pageRequest.to && pageRequest.to.trim()) {
-        params.append('to', pageRequest.to.trim());
-      }
-
-      const paramString = params.toString();
-      return paramString;
+function getParam(page) {
+    const formData = new FormData(searchForm);
+    formData.set("page", page);
+	return new URLSearchParams(formData).toString();
 }
 
 function updatePage(data) {
 	<!-- 수정한 내용 -->
-    const pageRequest   = document.getElementById("pageRequestDTO").dataset.param;
-	alert(pageRequest);
+	/*
+    const pageRequestDTO = document.getElementById("pageRequestDTO").dataset.param;
+	alert(pageRequestDTO);
 	const template      = document.getElementById("pageTemplate");
     const pageList      = document.getElementById("pageList");
-    
     pageList.innerHTML = "";
+    */
     
+    const paginationContainer = document.querySelector("#paginationContainer");
+    const prev = paginationContainer.querySelector("#prev");
+    const pageNos = paginationContainer.querySelectorAll(".page-no");
+    const next = paginationContainer.querySelector("#next");
+    const page = document.querySelector("#searchForm > #page");
+	
     if (data.pageResponse.list && data.pageResponse.list.length > 0) { 
-    	 if(data.pageResponse.prev){
-    		 const clone = template.content.cloneNode(true);
-    		 
-    		 clone.querySelector('.page-list').textContent = "이전";								<!-- 수정한 내용 -->
-             clone.querySelector('.page-list').dataset.param = getParam(data.pageResponse.begin-1, pageRequest);
-             
-             pageList.appendChild(clone);
-    	 }
-    	 for(let i=data.pageResponse.begin;i<=data.pageResponse.end;i++){
-    		 const clone = template.content.cloneNode(true);
-    		 
-    		 clone.querySelector('.page-list').textContent = i;			<!-- 수정한 내용 -->
-             clone.querySelector('.page-list').dataset.param = getParam(i, pageRequest);
-             
-             if (data.pageResponse.page == i) {
-            	    clone.querySelector('.page-list').classList.add('active');
-            }
+        prev.style.display = data.pageResponse.prev ? "" : "none";
+        prev.dataset.pageNo = data.pageResponse.begin-1;
+ 
+    	pageNos.forEach(pageNo => {
+    		pageNo.style.display = "none";
+    		pageNo.classList.remove("active");
+    	});
+    	for(let i=data.pageResponse.begin, idx=0;i<=data.pageResponse.end;i++,idx++){
+    		if (page.value == i) {
+        		pageNos[idx].classList.add("active");
+    		}
+    		pageNos[idx].textContent = i;
+    		pageNos[idx].dataset.pageNo = i;
+    		pageNos[idx].style.display = "";
+        }
 
-             pageList.appendChild(clone);
-         }
-    	 if(data.pageResponse.next){
-    		 const clone = template.content.cloneNode(true);
-    		 
-    		 clone.querySelector('.page-list').textContent = "다음";								<!-- 수정한 내용 -->
-             clone.querySelector('.page-list').dataset.param = getParam(data.pageResponse.end+1, pageRequest);
-             alert(clone.querySelector('.page-list').dataset.param);
-             pageList.appendChild(clone);
-    	 }
+    	next.style.display = data.pageResponse.next ? "" : "none";
+    	next.dataset.pageNo = data.pageResponse.end+1;
     } else {
     	pageList.innerHTML = "<div>검색 결과가 없습니다.</div>";
     }
 }
-fetchPageData("page=1");
+fetchPageData(1);
 </script>

@@ -275,7 +275,7 @@
 				<div class="card-body">
 					<h3 class="card-title">검색</h3>
 					<form id="searchForm">
-						<input type="hidden" name="page" value=1>
+						<input type="hidden" name="page" id="page" value=1>
 
 						<div class="mb-3">
 							<select id="searchType" name="searchType" class="form-select">
@@ -291,10 +291,10 @@
 
 						<div class="input-group mb-3 dueDateDiv">
 							<span>FROM</span>
-							<input type="date" name="from" class="form-control"
+							<input type="date" name="from" id="from" class="form-control"
 								value="${not empty pageRequestDTO.from ? pageRequestDTO.from : ''}">
 							<span>TO</span>
-							<input type="date" name="to" class="form-control"
+							<input type="date" name="to" id="to" class="form-control"
 								value="${not empty pageRequestDTO.to ? pageRequestDTO.to : ''}">
 						</div>
 						<div class="input-group mb-3">
@@ -367,7 +367,7 @@ function performSearch(){
         .then(response => response.json())
         .then(data => {
             updateBoardList(data.pageResponse);
-            fetchPageData(getParam(1, data.pageRequest));
+            fetchPageData(1);
         })
         .catch(error => {
             console.error("비동기 처리 도중 오류발생:", error);
@@ -383,7 +383,7 @@ function updatePageSize(size) {
         .then(response => response.json())
         .then(data => {
             updateBoardList(data.pageResponse);
-            fetchPageData(getParam(1, data.pageRequest));
+            fetchPageData(1);
         })
         .catch(error => {
             console.error("비동기 처리 도중 오류 발생:", error);
