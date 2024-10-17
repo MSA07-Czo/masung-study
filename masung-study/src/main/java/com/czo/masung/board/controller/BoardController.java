@@ -44,9 +44,9 @@ public class BoardController {
 			pageRequestDTO = PageRequestDTO.builder().build();
 		}
 		System.out.println("pageRequestDTO 내용: " + pageRequestDTO);
-		PageResponseDTO<BoardDTO> pageResponseDTO = boardService.getList(pageRequestDTO);
+//		PageResponseDTO<BoardDTO> pageResponseDTO = boardService.getList(pageRequestDTO);
 
-		model.addAttribute("pageResponseDTO", pageResponseDTO);
+//		model.addAttribute("pageResponseDTO", pageResponseDTO);
 		model.addAttribute("pageRequestDTO", pageRequestDTO);
 		
 		return "/board/list";
