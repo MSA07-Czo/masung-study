@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/async/board")
+@RequestMapping(value = {"/async/board", "/api/board"})
 public class BoardRestController {
 	private final MapperUtil mapperUtil;
 	private final BoardService boardService;
@@ -46,7 +46,7 @@ public class BoardRestController {
 
 		return ResponseEntity.ok(response);
 	}
-	//댓글 목록 비동기처리
+	
 	@GetMapping("comment")
 	public ResponseEntity<Map<String, Object>> getComment(CommentPageRequestDTO commentPageRequestDTO){
 		System.out.println("비동기 댓글 요청 목록: " + commentPageRequestDTO);
@@ -59,7 +59,7 @@ public class BoardRestController {
 
 		return ResponseEntity.ok(response);
 	}
-	//댓글 등록 비동기처리
+	
 	@PostMapping("comment/register")
 	public ResponseEntity<Map<String, Object>> submitComment(@RequestBody CommentDTO comment, HttpSession session) {
 		UserDTO user = (UserDTO) session.getAttribute("loginInfo");
